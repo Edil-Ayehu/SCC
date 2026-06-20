@@ -16,5 +16,6 @@ struct Event: Identifiable {
 struct Store: Identifiable {
     let id = UUID()
     let name: String
+    let location: String
     let image: String
 }

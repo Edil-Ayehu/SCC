@@ -10,10 +10,10 @@ import SwiftUI
 struct StoresSection: View {
 
     let stores = [
-        Store(name: "Zoe Cash & Carry", image: "store"),
-        Store(name: "Test Store 19", image: "store2"),
-        Store(name: "Fresh Market", image: "store3"),
-        Store(name: "Downtown Grocery", image: "store4")
+        Store(name: "Zoe Cash & Carry",location: "", image: "store"),
+        Store(name: "Test Store 19",location: "", image: "store2"),
+        Store(name: "Fresh Market",location: "", image: "store3"),
+        Store(name: "Downtown Grocery",location: "", image: "store4")
     ]
 
     let columns = [

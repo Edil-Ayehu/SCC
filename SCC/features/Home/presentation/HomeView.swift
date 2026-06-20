@@ -16,7 +16,7 @@ struct HomeView: View {
                     Text("Home")
                 }
 
-            Text("Stores")
+            StoresView()
                 .tabItem {
                     Image(systemName: "fork.knife")
                     Text("Stores")

@@ -31,6 +31,7 @@ struct StoreCard: View {
             .padding()
             
         }
+        .frame(height: 200)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: .black.opacity(0.06), radius: 8)
