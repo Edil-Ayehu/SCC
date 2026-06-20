@@ -30,7 +30,7 @@ struct StoresSection: View {
             HStack {
 
                 Text("Stores Near You")
-                    .font(.system(size: 18, weight: .bold, design: .default))
+                    .font(.custom("Outfit-SemiBold", size: 16))
 
                 Spacer()
 
