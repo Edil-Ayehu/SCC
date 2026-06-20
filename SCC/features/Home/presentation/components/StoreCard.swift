@@ -22,7 +22,7 @@ struct StoreCard: View {
             
             VStack (alignment: .leading){
                 Text(store.name)
-                    .font(.system(size: 16))
+                    .font(.system(size: 16, weight: .semibold))
 
                 Label("Cape Town", systemImage: "location")
                     .font(.caption)

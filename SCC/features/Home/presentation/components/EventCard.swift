@@ -42,5 +42,6 @@ struct EventCard: View {
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 24))
         .shadow(color: .black.opacity(0.06), radius: 8)
+        .padding(.bottom, 4)
     }
 }

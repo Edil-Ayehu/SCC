@@ -27,6 +27,9 @@ struct AppNavigationView: View {
                         
                     case .home:
                         HomeView()
+                        
+                    case .stores:
+                        StoresView()
                     }
                 }
         }
@@ -47,6 +50,9 @@ struct AppNavigationView: View {
             
         case .forgotPassword:
             ForgotPasswordView()
+            
+        case .stores:
+            StoresView()
         }
     }
 }

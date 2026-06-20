@@ -12,8 +12,8 @@ struct HeaderSection: View {
         ZStack {
             LinearGradient(
                 colors: [
-                    Color(red: 0.08, green: 0.12, blue: 0.45),
-                    Color.primaryPurple.opacity(0.85)
+                    Color.gradientStart,
+                    Color.gradientEnd
                 ],
                 startPoint: .leading,
                 endPoint: .trailing

@@ -20,6 +20,8 @@ struct StoresSection: View {
         GridItem(.flexible(), spacing: 10),
         GridItem(.flexible(), spacing: 10)
     ]
+    
+    @EnvironmentObject var router: AppRouter
 
     var body: some View {
 
@@ -33,7 +35,7 @@ struct StoresSection: View {
                 Spacer()
 
                 Button("See All") {
-
+                    router.push(.stores)
                 }
                 .fontWeight(.semibold)
             }

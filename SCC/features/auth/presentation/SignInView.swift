@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct SignInView: View {
-    @State private var phoneNumber = ""
-    @State private var password = ""
+    @State private var phoneNumber = "0930884402"
+    @State private var password = "123456"
     @State private var _isLoading: Bool = false
     
     var isValid: Bool {

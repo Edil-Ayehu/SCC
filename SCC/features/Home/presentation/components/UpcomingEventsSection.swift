@@ -39,6 +39,7 @@ struct UpcomingEventsSection: View {
                 }
                 .padding(.horizontal, 20)
             }
+            
         }
     }
 }
