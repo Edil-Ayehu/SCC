@@ -9,16 +9,31 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    
+                    Rectangle()
+                        .background(Color.red)
+                        .frame(width: 300, height: 200)
+                        .cornerRadius(16)
+                        .overlay {
+                            VStack {
+                                
+                                Image("inactive_card")
+                                    .resizable()
+                            }
+                        }
+                        
+                }
+                .padding()
+            }
         }
-        .padding()
+        .navigationTitle("Closed Cards")
+        
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}

@@ -1,0 +1,37 @@
+//
+//  AppRouter.swift
+//  SCC
+//
+//  Created by Edil on 19/06/2026.
+//
+
+import SwiftUI
+
+@MainActor
+final class AppRouter: ObservableObject {
+    @Published var path = NavigationPath()
+    @Published var root: AppRoute = .signIn
+    
+    func push(_ route: AppRoute) {
+        path.append(route)
+    }
+    
+    func pop() {
+        guard !path.isEmpty else { return }
+        path.removeLast()
+    }
+    
+    func popToRoot() {
+        path = NavigationPath()
+    }
+    
+    func setRoot(_ route: AppRoute) {
+        path = NavigationPath()
+        root = route
+    }
+    
+    func replace(with route: AppRoute) {
+        path = NavigationPath()
+        path.append(route)
+    }
+}
