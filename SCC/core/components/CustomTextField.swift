@@ -22,12 +22,14 @@ struct CustomTextField: View {
             if label != nil {
                 HStack(spacing: 0) {
                     Text(label!)
-                        .font(.custom("Outfit-Regular", size: 12))
+                        .font(.custom("Outfit-Regular", size: 16))
                     if isRequired {
                         Text("*").foregroundColor(.red)
 
                     }
                 }
+                
+                Spacer().frame(height: 4)
             }
 
             HStack {
@@ -42,10 +44,10 @@ struct CustomTextField: View {
 
                 if isPassword && isSecure {
                     SecureField(placeholder, text: $text)
-                        .font(.custom("Outfit-Medium", size: 12))
+                        .font(.custom("Outfit-Regular", size: 14))
                 } else {
                     TextField(placeholder, text: $text)
-                        .font(.custom("Outfit-Medium", size: 12))
+                        .font(.custom("Outfit-Regular", size: 14))
                 }
 
                 if isPassword {

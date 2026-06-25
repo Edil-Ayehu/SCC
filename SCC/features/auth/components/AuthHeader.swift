@@ -13,17 +13,12 @@ struct AuthHeader: View {
     var body: some View {
         VStack(spacing: 8) {
             Text(title)
-                .font(.largeTitle)
-                .fontWeight(.bold)
+                .font(.custom("Outfit-SemiBold", size: 28))
 
             Text(description)
-                .font(.subheadline)
+                .font(.custom("Outfit-Regular", size: 14))
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
         }
     }
 }
-
-//#Preview {
-//    AuthHeader()
-//}

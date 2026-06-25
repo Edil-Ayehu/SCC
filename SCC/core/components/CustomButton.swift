@@ -13,6 +13,7 @@ struct CustomButton: View {
 
     var isEnabled: Bool = true
     var isLoading: Bool = false
+    var height: CGFloat = 56
 
     var body: some View {
         Button(action: action) {
@@ -22,12 +23,11 @@ struct CustomButton: View {
                         .tint(.white)
                 } else {
                     Text(title)
-                        .font(.headline)
-                        .fontWeight(.semibold)
+                        .font(.custom("Outfit-Medium", size: 16))
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 56)
+            .frame(height: height)
             .foregroundColor(.white)
             .background(
                 isEnabled

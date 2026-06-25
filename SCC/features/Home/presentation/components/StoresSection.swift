@@ -30,14 +30,21 @@ struct StoresSection: View {
             HStack {
 
                 Text("Stores Near You")
-                    .font(.custom("Outfit-SemiBold", size: 16))
+                    .font(.custom("Outfit-Medium", size: 16))
 
                 Spacer()
 
-                Button("See All") {
+//                Button("See All") {
+//                    router.push(.stores)
+//                }
+//                .fontWeight(.semibold)
+                
+                Button {
                     router.push(.stores)
+                } label: {
+                    Text("See All")
+                        .font(.custom("Outfit-Medium", size: 14))
                 }
-                .fontWeight(.semibold)
             }
             .padding(.horizontal, 20)
 

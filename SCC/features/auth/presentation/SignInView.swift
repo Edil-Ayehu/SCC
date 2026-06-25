@@ -24,34 +24,23 @@ struct SignInView: View {
 
                 VStack(spacing: 16) {
                     
-                    VStack (alignment: .leading) {
-                        Text("Phone number")
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                        
-                        CustomTextField(
-                            text: $phoneNumber,
-                            placeholder: "Enter phone number",
-                            isRequired: true,
-                            prefixIcon: Image(systemName: "phone"),
-                        )
-                    }
+                    CustomTextField(
+                        text: $phoneNumber,
+                        placeholder: "Enter phone number",
+                        label: "Phone number",
+                        isRequired: true,
+                        prefixIcon: Image(systemName: "phone"),
+                    )
                     
                     
-                    
-                    VStack (alignment: .leading) {
-                        Text("Password")
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                        
-                        CustomTextField(
-                            text: $password,
-                            placeholder: "Enter password",
-                            isRequired: true,
-                            isPassword: true,
-                            prefixIcon: Image(systemName: "lock"),
-                        )
-                    }
+                    CustomTextField(
+                        text: $password,
+                        placeholder: "Enter password",
+                        label: "Password",
+                        isRequired: true,
+                        isPassword: true,
+                        prefixIcon: Image(systemName: "lock"),
+                    )
                     
                     
                     
@@ -66,7 +55,7 @@ struct SignInView: View {
                         router.push(.forgotPassword)
                     } label: {
                         Text("Forgot Password?")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(.custom("Outfit-SemiBold", size: 16))
                             .foregroundColor(.primaryPurple)
                     }
                 }
@@ -79,20 +68,20 @@ struct SignInView: View {
                     title: "Continue",
                     action: _handleSignIn,
                     isEnabled: isValid,
-                    isLoading: _isLoading
+                    isLoading: _isLoading,
+                    height: 52
                 )
                 
                 Button {
-                    // handle click | navigate to signup screen
                     router.push(.signUp)
                 } label: {
                     HStack {
                         Text("Don't have an account?")
-                            .font(.system(size: 16, weight: .medium))
+                            .font(.custom("Outfit-Regular", size: 16))
                             .foregroundColor(.black)
                         
                         Text("Sign Up")
-                            .font(.system(size: 16, weight: .bold))
+                            .font(.custom("Outfit-SemiBold", size: 16))
                             .foregroundColor(.primaryPurple)
                     }
                     
