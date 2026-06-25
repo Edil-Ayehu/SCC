@@ -13,31 +13,41 @@ struct HomeView: View {
             HomeContentView()
                 .tabItem {
                     Image(systemName: "house.fill")
+                        .font(.system(size: 18))
                     Text("Home")
+                        .font(.custom("Outfit-Regular", size: 12))
                 }
 
-            StoresView()
+            ProductsView()
                 .tabItem {
                     Image(systemName: "fork.knife")
-                    Text("Stores")
+                        .font(.system(size: 18))
+                    Text("Products")
+                        .font(.custom("Outfit-Regular", size: 12))
                 }
 
             Text("Vouchers")
                 .tabItem {
                     Image(systemName: "tag.fill")
+                        .font(.system(size: 18))
                     Text("Vouchers")
+                        .font(.custom("Outfit-Regular", size: 12))
                 }
 
             Text("Cart")
                 .tabItem {
                     Image(systemName: "cart.fill")
+                        .font(.system(size: 18))
                     Text("Cart")
+                        .font(.custom("Outfit-Regular", size: 12))
                 }
 
             Text("Profile")
                 .tabItem {
                     Image(systemName: "person.fill")
+                        .font(.system(size: 18))
                     Text("Profile")
+                        .font(.custom("Outfit-Regular", size: 12))
                 }
         }
     }
