@@ -30,6 +30,9 @@ struct AppNavigationView: View {
                         
                     case .stores:
                         StoresView()
+                        
+                    case .wishlist:
+                        WishlistView()
                     }
                 }
         }
@@ -53,6 +56,9 @@ struct AppNavigationView: View {
             
         case .stores:
             StoresView()
+            
+        case .wishlist:
+            WishlistView()
         }
     }
 }

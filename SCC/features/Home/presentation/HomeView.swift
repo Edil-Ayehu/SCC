@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @State private var selectedTab: Tab = .home
     var body: some View {
-        TabView {
-            HomeContentView()
+        TabView (selection: $selectedTab) {
+            HomeContentView(selectedTab: $selectedTab)
                 .tabItem {
                     Image(systemName: "house.fill")
                         .font(.system(size: 18))
                     Text("Home")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+                .tag(Tab.home)
 
             ProductsView()
                 .tabItem {
@@ -25,6 +28,7 @@ struct HomeView: View {
                     Text("Products")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+                .tag(Tab.products)
 
             Text("Vouchers")
                 .tabItem {
@@ -33,6 +37,7 @@ struct HomeView: View {
                     Text("Vouchers")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+                .tag(Tab.vouchers)
 
             Text("Cart")
                 .tabItem {
@@ -41,6 +46,7 @@ struct HomeView: View {
                     Text("Cart")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+                .tag(Tab.cart)
 
             Text("Profile")
                 .tabItem {
@@ -49,6 +55,7 @@ struct HomeView: View {
                     Text("Profile")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+                .tag(Tab.profile)
         }
     }
 }

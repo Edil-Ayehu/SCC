@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HeaderSection: View {
+    @EnvironmentObject var router: AppRouter
+    @Binding var selectectTab: Tab
     var body: some View {
         ZStack {
             LinearGradient(
@@ -40,9 +42,13 @@ struct HeaderSection: View {
 
                     HStack(spacing: 12) {
 
-                        HeaderIconButton(icon: "bag")
+                        HeaderIconButton(icon: "bag", action: {
+                            selectectTab = .cart
+                        })
 
-                        HeaderIconButton(icon: "heart.fill")
+                        HeaderIconButton(icon: "heart.fill", action: {
+                            router.push(.wishlist)
+                        })
                     }
                 }
 

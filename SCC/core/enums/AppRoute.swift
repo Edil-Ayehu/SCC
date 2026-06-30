@@ -13,4 +13,5 @@ enum AppRoute: Hashable {
     case forgotPassword
     case home
     case stores
+    case wishlist
 }

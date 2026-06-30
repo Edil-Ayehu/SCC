@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct HomeContentView: View {
+    @Binding var selectedTab: Tab
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
 
-                HeaderSection()
+                HeaderSection(selectectTab: $selectedTab)
 
                 VStack(spacing: 24) {
 
