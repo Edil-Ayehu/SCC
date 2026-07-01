@@ -38,7 +38,13 @@ final class SignInViewModel: ObservableObject {
             
             isLoggedIn = true
         } catch {
-            errorMessage = error.localizedDescription
+            print("Setting error:", error.localizedDescription)
+            
+            errorMessage = nil
+
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                }
         }
     }
 }

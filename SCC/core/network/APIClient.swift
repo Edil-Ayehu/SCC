@@ -51,13 +51,15 @@ final class APIClient {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.invalidResponse
+        }
+        
         // MARK: Response Log
         
         print("📥 ================= RESPONSE ================")
         
-        if let httpResponse = response as? HTTPURLResponse {
-            print("STATUS: \(httpResponse.statusCode)")
-        }
+        print("STATUS: \(httpResponse.statusCode)")
         
         if let json = String(data: data, encoding: .utf8) {
             print("BODY:")
@@ -67,11 +69,24 @@ final class APIClient {
         print("=============================================")
         
         do {
-            return try JSONDecoder().decode(T.self, from: data)
+            let decoder = JSONDecoder()
+            
+            if !(200...299).contains(httpResponse.statusCode) {
+
+
+                if let apiError = try? decoder.decode(APIErrorResponse.self, from: data) {
+                    throw APIError.server(apiError)
+                }
+
+                throw APIError.invalidResponse
+            }
+                        
+            
+            return try decoder.decode(T.self, from: data)
         } catch {
             
-            print("❌ Decoding Error:")
-            print(error)
+            print("❌ Request Failed:")
+            print(error.localizedDescription)
             
             throw error
             

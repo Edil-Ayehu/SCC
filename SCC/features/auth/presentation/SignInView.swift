@@ -1,4 +1,5 @@
 import SwiftUI
+import AlertToast
 
 struct SignInView: View {
     @State private var phoneNumber = "0930884402"
@@ -12,6 +13,9 @@ struct SignInView: View {
     @EnvironmentObject private var router: AppRouter
     
     @StateObject private var vm = DIContainer.shared.makeSignInViewModel()
+    
+    @State private var showToast = false
+    @State private var toastMessage = ""
 
     var body: some View {
             VStack(spacing: 24) {
@@ -106,6 +110,9 @@ struct SignInView: View {
                 if let error {
                     print(error)
                         // show an alert or toast here
+                    showToast = true
+                    toastMessage = error
+                    
                 }
             }
             .onChange(of: vm.isLoggedIn) { isLoggedIn in
@@ -114,6 +121,17 @@ struct SignInView: View {
                     print("👋👋👋👋 Sign In Successful!")
                 }
                 
+            }
+            .toast(isPresenting: $showToast, duration: 2, tapToDismiss: true) {
+                AlertToast(
+                    displayMode: .hud,
+                    type: .error(.red),
+                    title: toastMessage
+                )
+            } onTap: {
+                showToast = false
+            } completion: {
+                showToast = false
             }
     }
     
