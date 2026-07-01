@@ -19,7 +19,7 @@ struct LoginResponse: Decodable {
 struct User: Decodable {
     let id: String
     let phone: String
-    let email: String
+    let email: String?
     let name: String
     let role: String
 }

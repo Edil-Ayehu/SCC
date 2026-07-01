@@ -28,4 +28,25 @@ final class AuthRepositoryImpl: AuthRepository {
             body: request
         )
     }
+    
+    func register(
+        phone: String,
+        password: String,
+        email: String?,
+        name: String
+    ) async throws -> SignUpResponse {
+        let request = SignUpRequest(
+            phone: phone,
+            email: email,
+            password: password,
+            name: name,
+        )
+        
+        
+        return try await apiClient.request(
+            endpoint: "https://cash-carry-smart-ordering-system.onrender.com/auth/register",
+            method: "POST",
+            body: request
+        )
+    }
 }

@@ -12,4 +12,11 @@ protocol AuthRepository {
         phoneNumber: String,
         password: String
     ) async throws -> LoginResponse
+    
+    func register(
+        phone: String,
+        password: String,
+        email: String?,
+        name: String,
+    ) async throws -> SignUpResponse
 }

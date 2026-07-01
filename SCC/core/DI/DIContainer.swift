@@ -29,4 +29,8 @@ final class DIContainer {
     func makeSignInViewModel() -> SignInViewModel {
         SignInViewModel(repository: authRepository)
     }
+    
+    func makeSignUpViewModel() -> SignUpViewModel {
+        SignUpViewModel(repository: authRepository)
+    }
 }

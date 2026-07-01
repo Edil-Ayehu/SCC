@@ -20,6 +20,8 @@ struct SignupView: View {
     }
     
     @EnvironmentObject private var router: AppRouter
+    
+    @StateObject private var vm = DIContainer.shared.makeSignUpViewModel()
 
     var body: some View {
             VStack(spacing: 24) {
@@ -39,7 +41,8 @@ struct SignupView: View {
                             .fontWeight(.medium)
                         
                         CustomTextField(
-                            text: $fullName,
+//                            text: $fullName,
+                            text: $vm.name,
                             placeholder: "Enter full name",
                             isRequired: true,
                             prefixIcon: Image(systemName: "phone"),
@@ -52,7 +55,8 @@ struct SignupView: View {
                             .fontWeight(.medium)
                         
                         CustomTextField(
-                            text: $email,
+//                            text: $email,
+                            text: $vm.email,
                             placeholder: "Enter email",
                             isRequired: true,
                             prefixIcon: Image(systemName: "phone"),
@@ -65,7 +69,8 @@ struct SignupView: View {
                             .fontWeight(.medium)
                         
                         CustomTextField(
-                            text: $phoneNumber,
+//                            text: $phoneNumber,
+                            text: $vm.phone,
                             placeholder: "Enter phone number",
                             isRequired: true,
                             prefixIcon: Image(systemName: "phone"),
@@ -80,7 +85,8 @@ struct SignupView: View {
                             .fontWeight(.medium)
                         
                         CustomTextField(
-                            text: $createPassword,
+//                            text: $createPassword,
+                            text: $vm.password,
                             placeholder: "create password",
                             isRequired: true,
                             isPassword: true,
@@ -95,7 +101,7 @@ struct SignupView: View {
                         
                         CustomTextField(
                             text: $confirmPassword,
-                            placeholder: "create password",
+                            placeholder: "confirm password",
                             isRequired: true,
                             isPassword: true,
                             prefixIcon: Image(systemName: "lock"),
@@ -111,9 +117,15 @@ struct SignupView: View {
                 
                 CustomButton(
                     title: "Continue",
-                    action: _handleSignUP,
-                    isEnabled: isValid,
-                    isLoading: _isLoading,
+//                    action: _handleSignUP,
+                    action: {
+                        print("👋Continue Tapped")
+                        Task {
+                            await vm.register()
+                        }
+                    },
+                    isEnabled: vm.phone.count >= 9 && vm.password.count >= 6 && vm.password == confirmPassword && vm.name.count > 3,
+                    isLoading: vm.isLoading,
                 )
                 
                 Button {
@@ -136,6 +148,16 @@ struct SignupView: View {
             }
             .padding(.horizontal, 24)
             .navigationBarHidden(true)
+            .onChange(of: vm.errorMessage) { error in
+                if let error {
+                    print("😭Error message:" + error)
+                    // show an alert or toast here
+                }
+            }
+            .onChange(of: vm.isLoggedIn) { isLoggedIn in
+                router.pop()
+                print("👋👋👋👋 Sign Up Successful!")
+            }
     }
     
     func _handleSignUP() {
