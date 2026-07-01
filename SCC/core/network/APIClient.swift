@@ -1,0 +1,93 @@
+//
+//  APIClient.swift
+//  SCC
+//
+//  Created by Edil on 01/07/2026.
+//
+
+import Foundation
+
+final class APIClient {
+    
+    init() {}
+    
+    func request<T: Decodable>(
+        endpoint: String,
+        method: String = "GET",
+        body: Encodable? = nil
+    ) async throws -> T {
+        guard let url = URL(string: endpoint) else {
+            throw URLError(.badURL)
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if let body = body {
+            let bodyData = try JSONEncoder().encode(AnyEncodable(body))
+            request.httpBody = bodyData
+        }
+        
+        // Mark: Request log
+        print("🚀 ================= REQUEST =================")
+        print("URL: \(url.absoluteString)")
+        print("METHOD: \(method)")
+        
+        if let headers = request.allHTTPHeaderFields {
+            print("HEADERS:")
+            headers.forEach { print("   \($0): \($1)") }
+        }
+        
+        if let body = request.httpBody,
+           let bodyString = String(data: body, encoding: .utf8) {
+            print("BODY:")
+            print(bodyString)
+        }
+        
+        print("=============================================")
+        
+        // Perform request
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        // MARK: Response Log
+        
+        print("📥 ================= RESPONSE ================")
+        
+        if let httpResponse = response as? HTTPURLResponse {
+            print("STATUS: \(httpResponse.statusCode)")
+        }
+        
+        if let json = String(data: data, encoding: .utf8) {
+            print("BODY:")
+            print(json)
+        }
+        
+        print("=============================================")
+        
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            
+            print("❌ Decoding Error:")
+            print(error)
+            
+            throw error
+            
+        }
+    }
+}
+
+struct AnyEncodable: Encodable {
+
+    private let encodeFunc: (Encoder) throws -> Void
+
+    init(_ wrapped: Encodable) {
+        encodeFunc = wrapped.encode
+    }
+
+    func encode(to encoder: Encoder) throws {
+        try encodeFunc(encoder)
+    }
+}

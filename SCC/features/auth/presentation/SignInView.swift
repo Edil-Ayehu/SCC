@@ -10,6 +10,8 @@ struct SignInView: View {
     }
     
     @EnvironmentObject private var router: AppRouter
+    
+    @StateObject private var vm = DIContainer.shared.makeSignInViewModel()
 
     var body: some View {
             VStack(spacing: 24) {
@@ -25,7 +27,8 @@ struct SignInView: View {
                 VStack(spacing: 16) {
                     
                     CustomTextField(
-                        text: $phoneNumber,
+//                        text: $phoneNumber,
+                        text: $vm.phoneNumber,
                         placeholder: "Enter phone number",
                         label: "Phone number",
                         isRequired: true,
@@ -34,7 +37,8 @@ struct SignInView: View {
                     
                     
                     CustomTextField(
-                        text: $password,
+//                        text: $password,
+                        text: $vm.password,
                         placeholder: "Enter password",
                         label: "Password",
                         isRequired: true,
@@ -66,9 +70,14 @@ struct SignInView: View {
                 
                 CustomButton(
                     title: "Continue",
-                    action: _handleSignIn,
-                    isEnabled: isValid,
-                    isLoading: _isLoading,
+//                    action: _handleSignIn,
+                    action: {
+                        Task {
+                            await vm.login()
+                        }
+                    },
+                    isEnabled: vm.phoneNumber.count >= 9 && vm.password.count >= 6,
+                    isLoading: vm.isLoading,
                     height: 52
                 )
                 
@@ -93,17 +102,30 @@ struct SignInView: View {
             }
             .padding(.horizontal, 24)
             .navigationBarHidden(true)
+            .onChange(of: vm.errorMessage) {error in
+                if let error {
+                    print(error)
+                        // show an alert or toast here
+                }
+            }
+            .onChange(of: vm.isLoggedIn) { isLoggedIn in
+                if isLoggedIn {
+                    router.setRoot(.home)
+                    print("👋👋👋👋 Sign In Successful!")
+                }
+                
+            }
     }
     
-    func _handleSignIn() {
-        _isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            print("Phone number: " + phoneNumber)
-            print("Sign In Successful!")
-            _isLoading = false
-            router.setRoot(.home)
-        })
-    }
+//    func _handleSignIn() {
+//        _isLoading = true
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+//            print("Phone number: " + phoneNumber)
+//            print("Sign In Successful!")
+//            _isLoading = false
+//            router.setRoot(.home)
+//        })
+//    }
 }
 
 //#Preview {
