@@ -21,6 +21,8 @@ struct UpcomingEventsSection: View {
             image: "event2"
         )
     ]
+    
+    @State private var selectedEvent: Event?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -35,10 +37,20 @@ struct UpcomingEventsSection: View {
 
                     ForEach(events) { event in
                         EventCard(event: event)
+                            .onTapGesture {
+                                selectedEvent = event
+                            }
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 32)
             }
+            
+        }
+        .sheet(item: $selectedEvent) { event in
+            EventDetailSheet(event: event)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.medium, .large])
+                .cornerRadius(20)
             
         }
     }

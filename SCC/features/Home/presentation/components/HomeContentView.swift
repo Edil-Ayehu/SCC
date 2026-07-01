@@ -18,8 +18,10 @@ struct HomeContentView: View {
                 VStack(spacing: 24) {
 
                     UpcomingEventsSection()
+                    
+                    PopularProductsSection(selectedTab: $selectedTab)
 
-                    StoresSection()
+//                    StoresSection()
                 }
                 .padding(.top, 24)
                 .background(Color(.white))

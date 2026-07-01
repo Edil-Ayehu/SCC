@@ -14,4 +14,5 @@ enum AppRoute: Hashable {
     case home
     case stores
     case wishlist
+    case productDetails(Product)
 }

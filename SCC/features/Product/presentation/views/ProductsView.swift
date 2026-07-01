@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Product: Identifiable {
+struct Product: Identifiable, Hashable {
     let id = UUID()
     let category: String
     let name: String
@@ -32,6 +32,8 @@ struct ProductsView: View {
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
     ]
+    
+    @EnvironmentObject private var router: AppRouter
 
     var body: some View {
         VStack(spacing: 0) {
@@ -61,6 +63,9 @@ struct ProductsView: View {
                     LazyVGrid(columns: columns, spacing: 12) {
                         ForEach(products) { product in
                             ProductCard(product: product)
+                                .onTapGesture {
+                                    router.push(.productDetails(product))
+                                }
                         }
                     }
                 }

@@ -33,6 +33,9 @@ struct AppNavigationView: View {
                         
                     case .wishlist:
                         WishlistView()
+                        
+                    case .productDetails(let product):
+                        ProductDetailView(product: product)
                     }
                 }
         }
@@ -59,6 +62,9 @@ struct AppNavigationView: View {
             
         case .wishlist:
             WishlistView()
+            
+        case .productDetails(let product):
+            ProductDetailView(product: product)
         }
     }
 }
