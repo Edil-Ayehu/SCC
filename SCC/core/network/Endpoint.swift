@@ -17,6 +17,40 @@ enum Endpoint {
     
     // MARK: Products
     
+    enum Product {
+
+        /// catalog=true is always required
+        static func list(category: String? = nil,
+                         search: String? = nil) -> String {
+
+            var components = URLComponents(string: "\(baseUrl)/products")!
+
+            var items: [URLQueryItem] = [
+                URLQueryItem(name: "catalog", value: "true")
+            ]
+
+            if let category,
+               !category.isEmpty {
+                items.append(
+                    URLQueryItem(name: "category",
+                                 value: category)
+                )
+            }
+
+            if let search,
+               !search.isEmpty {
+                items.append(
+                    URLQueryItem(name: "search",
+                                 value: search)
+                )
+            }
+
+            components.queryItems = items
+
+            return components.url!.absoluteString
+        }
+    }
+    
     // MARK: Stores
     
     // MARK: Orders

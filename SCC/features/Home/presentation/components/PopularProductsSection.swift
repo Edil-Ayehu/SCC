@@ -49,16 +49,16 @@ struct PopularProductsSection: View {
             }
             .padding(.horizontal, 20)
 
-            LazyVGrid(columns: columns, spacing: 16) {
-
-                ForEach(products) { product in
-                    ProductCard(product: product)
-                        .onTapGesture {
-                            router.push(.productDetails(product))
-                        }
-                }
-            }
-            .padding(.horizontal, 20)
+//            LazyVGrid(columns: columns, spacing: 16) {
+//
+//                ForEach(products) { product in
+//                    ProductCard(product: product)
+//                        .onTapGesture {
+//                            router.push(.productDetails(product))
+//                        }
+//                }
+//            }
+//            .padding(.horizontal, 20)
             
             Spacer().frame(height: 10)
         }

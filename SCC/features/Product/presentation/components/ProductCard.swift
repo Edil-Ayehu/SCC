@@ -9,18 +9,45 @@ import SwiftUI
 
 struct ProductCard: View {
 
-    let product: Product
+    let product: ProductResponse
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            
+            AsyncImage(url: URL(string: product.image ?? "")) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
 
-            Image(product.imageName)
-                .resizable()
-                .scaledToFit()
-                .clipped()
+                case .failure(_):
+                    Image(systemName: "photo")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.gray)
+                        .padding(30)
+                        .background(Color.gray.opacity(0.1))
+
+                case .empty:
+                    ProgressView()
+
+                @unknown default:
+                    Image(systemName: "photo")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.gray)
+                        .padding(30)
+                        .background(Color.gray.opacity(0.1))
+                }
+            }
+            .frame(height: 120)
+            .frame(maxWidth: .infinity)
+            .background(Color.gray.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 18))
             
             VStack (alignment: .leading){
-                Text(product.category)
+                Text(product.category.name)
                     .font(.custom("Outfit-Regular", size: 14))
                     .foregroundColor(.cyan)
 

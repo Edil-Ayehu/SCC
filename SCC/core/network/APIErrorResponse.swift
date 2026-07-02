@@ -9,6 +9,4 @@ struct APIErrorResponse: Decodable {
     let statusCode: Int
     let message: [String]
     let error: String
-    let timestamp: String
-    let path: String
 }

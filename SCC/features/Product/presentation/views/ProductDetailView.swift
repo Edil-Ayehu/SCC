@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductDetailView: View {
-    let product: Product
+    let product: ProductResponse
     
     var body: some View {
         Text("Product detail view")

@@ -26,6 +26,10 @@ final class DIContainer {
         AuthRepositoryImpl(apiClient: apiClient, tokenStorage: tokenStorage)
     } ()
     
+    lazy var productRepository: ProductRepository = {
+        ProductRepositoryImpl(apiClient: apiClient)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -40,5 +44,9 @@ final class DIContainer {
     
     func makeSignUpViewModel() -> SignUpViewModel {
         SignUpViewModel(repository: authRepository)
+    }
+    
+    func makeProductViewModel() -> ProductViewModel {
+        ProductViewModel(repository: productRepository)
     }
 }

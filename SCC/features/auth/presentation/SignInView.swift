@@ -135,17 +135,5 @@ struct SignInView: View {
             }
     }
     
-//    func _handleSignIn() {
-//        _isLoading = true
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-//            print("Phone number: " + phoneNumber)
-//            print("Sign In Successful!")
-//            _isLoading = false
-//            router.setRoot(.home)
-//        })
-//    }
 }
 
-//#Preview {
-//    SignInView()
-//}

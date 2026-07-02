@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct Product: Identifiable, Hashable {
     let id = UUID()
@@ -18,22 +19,16 @@ struct Product: Identifiable, Hashable {
 struct ProductsView: View {
 
     @State private var searchText = ""
-
-    let products: [Product] = [
-        .init(category: "Household", name: "Test", imageName: "store"),
-        .init(category: "Bakery", name: "Teff", imageName: "store3"),
-        .init(category: "Oil", name: "new product", imageName: "store2"),
-        .init(category: "Oil", name: "Cooking Oil 5L", imageName: "store3"),
-        .init(category: "Grains", name: "Bulk Rice 10kg", imageName: "store4"),
-        .init(category: "Oil", name: "Pro 20", imageName: "store4")
-    ]
-
+    
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
     ]
     
     @EnvironmentObject private var router: AppRouter
+    
+        
+    @StateObject private var vm = DIContainer.shared.makeProductViewModel()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -52,16 +47,21 @@ struct ProductsView: View {
 
                         TextField(
                             "Search your favorite drinks or meals...",
-                            text: $searchText
+                            text: $vm.search
                         )
                         .font(.custom("Outfit-Regular", size: 14))
+                        .onSubmit {
+                            Task {
+                                await vm.loadProducts()
+                            }
+                        }
                     }
                     .padding()
                     .background(Color(.gray).opacity(0.1))
                     .cornerRadius(16)
 
                     LazyVGrid(columns: columns, spacing: 12) {
-                        ForEach(products) { product in
+                        ForEach(vm.products) { product in
                             ProductCard(product: product)
                                 .onTapGesture {
                                     router.push(.productDetails(product))
@@ -76,5 +76,8 @@ struct ProductsView: View {
 
         }
         .background(Color.white)
+        .task {
+            await vm.loadProducts()
+        }
     }
 }
