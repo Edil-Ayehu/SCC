@@ -44,7 +44,11 @@ final class SignUpViewModel: ObservableObject {
             isLoggedIn = true
             
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = nil
+            
+            DispatchQueue.main.async {
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
 }

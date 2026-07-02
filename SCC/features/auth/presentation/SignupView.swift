@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct SignupView: View {
     @State private var fullName = ""
@@ -13,7 +14,9 @@ struct SignupView: View {
     @State private var phoneNumber = ""
     @State private var createPassword = ""
     @State private var confirmPassword = ""
-    @State private var _isLoading: Bool = false
+    
+    @State private var showToast: Bool = false
+    @State private var toastMessage: String = ""
     
     var isValid: Bool {
         fullName.count > 2 && email.contains("@") && phoneNumber.count == 10 && createPassword.count >= 6  && createPassword == confirmPassword
@@ -152,20 +155,25 @@ struct SignupView: View {
                 if let error {
                     print("😭Error message:" + error)
                     // show an alert or toast here
+                    showToast = true
+                    toastMessage = error
                 }
             }
             .onChange(of: vm.isLoggedIn) { isLoggedIn in
                 router.pop()
                 print("👋👋👋👋 Sign Up Successful!")
             }
-    }
-    
-    func _handleSignUP() {
-        _isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            _isLoading = false
-            print("Sign Up Successful!")
-        })
+            .toast(isPresenting: $showToast, duration: 2, tapToDismiss: true) {
+                AlertToast(
+                    displayMode: .hud,
+                    type: .error(.red),
+                    title: toastMessage
+                )
+            } onTap: {
+                showToast = false
+            } completion: {
+                showToast = false
+            }
     }
 }
 
