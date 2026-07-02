@@ -13,15 +13,23 @@ final class DIContainer {
     
     private init() {}
     
+    lazy var tokenStorage: TokenStorage = {
+        UserDefaultsTokenStorage()
+    } ()
+    
+    lazy var authInterceptor: AuthInterceptor = {
+        AuthInterceptor(tokenStorage: tokenStorage)
+    } ()
+    
     // Repositories
     lazy var authRepository: AuthRepository = {
-        AuthRepositoryImpl(apiClient: apiClient)
+        AuthRepositoryImpl(apiClient: apiClient, tokenStorage: tokenStorage)
     } ()
     
     // MARK: Services
     
     lazy var apiClient: APIClient = {
-        APIClient()
+        APIClient(interceptor: authInterceptor)
     } ()
     
     // MARK: ViewModels

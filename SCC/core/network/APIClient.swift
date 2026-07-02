@@ -9,7 +9,11 @@ import Foundation
 
 final class APIClient {
     
-    init() {}
+    private let interceptor: RequestInterceptor?
+    
+    init(interceptor: RequestInterceptor? = nil) {
+        self.interceptor = interceptor
+    }
     
     func request<T: Decodable>(
         endpoint: String,
@@ -48,6 +52,10 @@ final class APIClient {
         print("=============================================")
         
         // Perform request
+        
+        if let interceptor {
+            request = interceptor.intercept(request)
+        }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         

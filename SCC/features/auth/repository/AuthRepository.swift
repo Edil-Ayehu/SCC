@@ -9,7 +9,7 @@
 protocol AuthRepository {
     
     func login(
-        phoneNumber: String,
+        phone: String,
         password: String
     ) async throws -> LoginResponse
     

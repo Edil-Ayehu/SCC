@@ -8,25 +8,31 @@
 final class AuthRepositoryImpl: AuthRepository {
     
     private let apiClient: APIClient
+    private let tokenStorage: TokenStorage
     
-    init(apiClient: APIClient) {
+    init(apiClient: APIClient, tokenStorage: TokenStorage) {
         self.apiClient = apiClient
+        self.tokenStorage = tokenStorage
     }
     
     func login(
-        phoneNumber: String,
+        phone: String,
         password: String
     ) async throws -> LoginResponse {
         let request = LoginRequest(
-            phone: phoneNumber,
+            phone: phone,
             password: password
         )
         
-        return try await apiClient.request(
-            endpoint: "https://cash-carry-smart-ordering-system.onrender.com/auth/login",
+        let response: LoginResponse =  try await apiClient.request(
+            endpoint: Endpoint.login,
             method: "POST",
             body: request
         )
+        
+        tokenStorage.save(token: response.accessToken)
+        
+        return response
     }
     
     func register(
@@ -44,7 +50,7 @@ final class AuthRepositoryImpl: AuthRepository {
         
         
         return try await apiClient.request(
-            endpoint: "https://cash-carry-smart-ordering-system.onrender.com/auth/register",
+            endpoint: Endpoint.register,
             method: "POST",
             body: request
         )

@@ -31,7 +31,10 @@ final class SignInViewModel: ObservableObject {
         
         do {
             
-            let response = try await repository.login(phoneNumber: "+27" + phoneNumber, password: password)
+            let response = try await repository.login(
+                phone: "+27" + phoneNumber,
+                password: password
+            )
             
             print(response.accessToken)
             print(response.user.name)
