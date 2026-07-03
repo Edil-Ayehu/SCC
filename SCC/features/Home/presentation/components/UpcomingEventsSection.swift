@@ -22,7 +22,9 @@ struct UpcomingEventsSection: View {
         )
     ]
     
-    @State private var selectedEvent: Event?
+    @State private var selectedEvent: EventResponse?
+    
+    @StateObject private var vm = DIContainer.shared.makeEventViewModel()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -34,17 +36,28 @@ struct UpcomingEventsSection: View {
             ScrollView(.horizontal, showsIndicators: false) {
 
                 HStack(spacing: 16) {
-
-                    ForEach(events) { event in
-                        EventCard(event: event)
-                            .onTapGesture {
-                                selectedEvent = event
-                            }
+                    if (vm.isLoading) {
+                        ForEach(0..<8, id: \.self) {_ in
+                            EventCardSkeleton()
+                                .redacted(reason: .placeholder)
+                        }
+                    } else {
+                        ForEach(vm.events) { event in
+                            EventCard(event: event)
+                                .onTapGesture {
+                                    selectedEvent = event
+                                }
+                        }
                     }
+
+                    
                 }
                 .padding(.horizontal, 32)
             }
             
+        }
+        .task {
+            await vm.loadEvents()
         }
         .sheet(item: $selectedEvent) { event in
             EventDetailSheet(event: event)

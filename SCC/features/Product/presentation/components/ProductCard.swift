@@ -12,44 +12,49 @@ struct ProductCard: View {
     let product: ProductResponse
 
     var body: some View {
-        let imageURL: URL? = {
-            guard let image = product.image,
-                  !image.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            else {
-                return nil
-            }
-            return URL(string: image)
-        }()
+//        let imageURL: URL? = {
+//            guard let image = product.image,
+//                  !image.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+//            else {
+//                return nil
+//            }
+//            return URL(string: image)
+//        }()
         VStack(alignment: .leading, spacing: 12) {
             
-            AsyncImage(url: imageURL) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-
-                case .failure(_), .empty:
-                    Image(systemName: "photo")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.gray)
-                        .padding(30)
-                        .background(Color.gray.opacity(0.1))
-
-                @unknown default:
-                    Image(systemName: "photo")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.gray)
-                        .padding(30)
-                        .background(Color.gray.opacity(0.1))
-                }
-            }
-            .frame(height: 120)
-            .frame(maxWidth: .infinity)
-            .background(Color.gray.opacity(0.08))
-            .clipShape(RoundedRectangle(cornerRadius: 18))
+//            AsyncImage(url: imageURL) { phase in
+//                switch phase {
+//                case .success(let image):
+//                    image
+//                        .resizable()
+//                        .scaledToFill()
+//
+//                case .failure(_), .empty:
+//                    Image(systemName: "photo")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .foregroundColor(.gray)
+//                        .padding(30)
+//                        .background(Color.gray.opacity(0.1))
+//
+//                @unknown default:
+//                    Image(systemName: "photo")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .foregroundColor(.gray)
+//                        .padding(30)
+//                        .background(Color.gray.opacity(0.1))
+//                }
+//            }
+//            .frame(height: 120)
+//            .frame(maxWidth: .infinity)
+//            .background(Color.gray.opacity(0.08))
+//            .clipShape(RoundedRectangle(cornerRadius: 18))
+            RemoteImage(
+                url: product.image,
+                height: 120,
+                cornerRadius: 18
+            )
             
             VStack (alignment: .leading){
                 Text(product.category.name)

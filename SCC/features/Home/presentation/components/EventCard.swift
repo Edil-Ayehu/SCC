@@ -9,26 +9,27 @@ import SwiftUI
 
 struct EventCard: View {
 
-    let event: Event
+    let event: EventResponse
 
     var body: some View {
 
         VStack(alignment: .leading, spacing: 0) {
-
-            Image(event.image)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 240, height: 180)
-                .clipped()
+            
+            RemoteImage(
+                url: event.bannerImage,
+                height: 180,
+                cornerRadius: 20,
+            )
+            .frame(width: 240)
 
             VStack(alignment: .leading, spacing: 12) {
 
-                Text(event.category)
-                    .font(.system(size: 14))
+                Text(event.eventType)
+                    .font(.custom("Outfit-Medium", size: 12))
                     .foregroundColor(.pink)
 
                 Text(event.title)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.custom("Outfit-SemiBold", size: 14))
 
                 Label("Starts: Sep 17, 2026", systemImage: "clock")
                     .font(.caption)
@@ -36,7 +37,8 @@ struct EventCard: View {
                 Label("Ends: Sep 25, 2026", systemImage: "flag")
                     .font(.caption)
             }
-            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(16)
         }
         .frame(width: 240, height: 320)
         .background(.white)

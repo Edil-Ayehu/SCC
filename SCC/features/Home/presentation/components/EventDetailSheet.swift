@@ -8,18 +8,18 @@ import SwiftUI
 
 struct EventDetailSheet: View {
 
-    let event: Event
+    let event: EventResponse
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            
+            RemoteImage(
+                url: event.bannerImage,
+                height: 220,
+                cornerRadius: 20,
+            )
 
-            Image(event.image)
-                .resizable()
-                .scaledToFill()
-                .frame(height: 220)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            Text(event.category)
+            Text(event.eventType)
                 .font(.custom("Outfit-Regular", size: 12))
                 .foregroundColor(.blue)
 
@@ -27,9 +27,8 @@ struct EventDetailSheet: View {
                 .font(.custom("Outfit-Regular", size: 18))
                 .bold()
 
-            Text("""
-            This is where you can show the event description, date, venue, available offers, and any other information.
-            """)
+            Text(event.description)
+                .font(.custom("Outfit-Regular", size: 12))
 
             Spacer()
         }

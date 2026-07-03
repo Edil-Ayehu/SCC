@@ -26,7 +26,7 @@ enum Endpoint {
             var components = URLComponents(string: "\(baseUrl)/products")!
 
             var items: [URLQueryItem] = [
-                URLQueryItem(name: "catalog", value: "true")
+//                URLQueryItem(name: "catalog", value: "true")
             ]
 
             if let category,
@@ -54,5 +54,10 @@ enum Endpoint {
     // MARK: Stores
     
     // MARK: Orders
+    
+    // MARK: Events
+    enum Event {
+        static let list = "\(baseUrl)/events/active"
+    }
     
 }
