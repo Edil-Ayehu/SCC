@@ -12,25 +12,30 @@ struct ProductCard: View {
     let product: ProductResponse
 
     var body: some View {
+        let imageURL: URL? = {
+            guard let image = product.image,
+                  !image.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            else {
+                return nil
+            }
+            return URL(string: image)
+        }()
         VStack(alignment: .leading, spacing: 12) {
             
-            AsyncImage(url: URL(string: product.image ?? "")) { phase in
+            AsyncImage(url: imageURL) { phase in
                 switch phase {
                 case .success(let image):
                     image
                         .resizable()
                         .scaledToFill()
 
-                case .failure(_):
+                case .failure(_), .empty:
                     Image(systemName: "photo")
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.gray)
                         .padding(30)
                         .background(Color.gray.opacity(0.1))
-
-                case .empty:
-                    ProgressView()
 
                 @unknown default:
                     Image(systemName: "photo")
