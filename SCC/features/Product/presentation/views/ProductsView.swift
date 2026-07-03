@@ -32,7 +32,6 @@ struct ProductsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-
             ScrollView(showsIndicators: false) {
 
                 VStack(spacing: 20) {
@@ -61,17 +60,26 @@ struct ProductsView: View {
                     .cornerRadius(16)
 
                     LazyVGrid(columns: columns, spacing: 12) {
-                        ForEach(vm.products) { product in
-                            ProductCard(product: product)
-                                .onTapGesture {
-                                    router.push(.productDetails(product))
-                                }
+                        if vm.isLoading {
+                            // showing loading indicator
+                            ForEach(0..<8, id: \.self) {_ in
+                                ProductCardSkeleton()
+                                    .redacted(reason: .placeholder)
+                            }
+                        } else {
+                            ForEach(vm.products) { product in
+                                ProductCard(product: product)
+                                    .onTapGesture {
+                                        router.push(.productDetails(product))
+                                    }
+                            }
                         }
+                        
                     }
                 }
                 .padding(.horizontal, 16)
             }
-
+            
             Divider()
 
         }
