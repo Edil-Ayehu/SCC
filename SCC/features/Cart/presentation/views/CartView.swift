@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct CartView: View {
-
-    @State private var items: [CartItem] = [
-        CartItem(name: "Coffee Roaster", image: nil, quantity: 1),
-        CartItem(name: "cake wheat flour", image: nil, quantity: 2),
-        CartItem(name: "Coffee", image: nil, quantity: 4)
-    ]
+    
+//    @EnvironmentObject var cartVM: CartViewModel
+    
+    @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +26,7 @@ struct CartView: View {
                 Spacer()
 
                 Button {
-
+                    cartVM.clearCart()
                 } label: {
                     Image(systemName: "trash")
                         .font(.title2)
@@ -37,49 +35,62 @@ struct CartView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
+            
+            if cartVM.items.isEmpty {
+                EmptyCartView()
+            } else {
+                ScrollView(showsIndicators: false) {
 
-            ScrollView(showsIndicators: false) {
+                    LazyVStack(spacing: 18) {
 
-                LazyVStack(spacing: 18) {
+                        ForEach(cartVM.items) { item in
+                            CartItemCard(item: item)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 30)
 
-                    ForEach($items) { $item in
-                        CartItemCard(item: $item)
+                    Spacer()
+                        .frame(height: 40)
+                }
+
+            }
+
+            
+            Divider()
+            
+            if (!cartVM.items.isEmpty) {
+                HStack(spacing: 16) {
+                    
+                    CustomButton(
+                        title: "Generate Voucher",
+                        action: {},
+                        height: 42
+                    )
+
+
+                    Button {
+
+                    } label: {
+                        Text("Add to Favorite")
+                            .font(.custom("Outfit-Medium", size: 16))
+                            .foregroundColor(.primaryPurple)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 42)
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color.primaryPurple, lineWidth: 1.5)
+                            )
                     }
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 30)
-
-                Spacer()
-                    .frame(height: 40)
+                .padding(.vertical, 18)
             }
 
-            Divider()
-
-            HStack(spacing: 16) {
-                
-                CustomButton(
-                    title: "Generate Voucher",
-                    action: {},
-                    height: 42
-                )
-
-
-                Button {
-
-                } label: {
-                    Text("Add to Favorite")
-                        .font(.custom("Outfit-Medium", size: 16))
-                        .foregroundColor(.primaryPurple)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 42)
-                        .overlay(
-                            Capsule()
-                                .stroke(Color.primaryPurple, lineWidth: 1.5)
-                        )
-                }
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 18)
+        }
+        .environmentObject(cartVM)
+        .task {
+            cartVM.loadCart()
         }
         .background(Color.white)
     }

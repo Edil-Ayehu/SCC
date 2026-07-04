@@ -12,6 +12,8 @@ struct HomeView: View {
     @State private var selectedTab: Tab = .home
     
     @StateObject private var vm = DIContainer.shared.makeProductViewModel()
+    
+//    @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
         
     var body: some View {
         TabView (selection: $selectedTab) {
@@ -51,6 +53,7 @@ struct HomeView: View {
                     Text("Cart")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+//                .environmentObject(cartVM)
                 .tag(Tab.cart)
 
             Text("Profile")

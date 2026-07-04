@@ -10,6 +10,8 @@ import SwiftUI
 struct ProductCard: View {
 
     let product: ProductResponse
+    
+    @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
 
     var body: some View {
 
@@ -36,18 +38,31 @@ struct ProductCard: View {
                     Spacer()
 
                     Button {
-
+                        cartVM.add(product: product)
                     } label: {
-                        Image(systemName: "plus")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(width: 34, height: 34)
-                            .background(
-                                Circle()
-                                    .fill(Color(red: 20/255,
-                                                green: 27/255,
-                                                blue: 93/255))
-                            )
+                        if cartVM.isProductInCart(product.id) {
+                            Image(systemName: "checkmark.circle")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.white)
+                                .frame(width: 34, height: 34)
+                                .background(
+                                    Circle()
+                                        .fill(Color(red: 20/255,
+                                                    green: 27/255,
+                                                    blue: 93/255))
+                                )
+                        } else {
+                            Image(systemName: "plus")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.white)
+                                .frame(width: 34, height: 34)
+                                .background(
+                                    Circle()
+                                        .fill(Color(red: 20/255,
+                                                    green: 27/255,
+                                                    blue: 93/255))
+                                )
+                        }
                     }
                 }
             }

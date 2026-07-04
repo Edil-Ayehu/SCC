@@ -34,11 +34,17 @@ final class DIContainer {
         EventRepositoryImpl(apiClient: apiClient)
     } ()
     
+    lazy var cartRepository: CartRepository = {
+        CartRepositoryImpl(service: cartService)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
         APIClient(interceptor: authInterceptor)
     } ()
+    
+    lazy var cartService = CartService()
     
     // MARK: ViewModels
     
@@ -56,5 +62,9 @@ final class DIContainer {
     
     func makeEventViewModel() -> EventViewModel {
         EventViewModel(repository: eventRepository)
+    }
+    
+    func makeCartViewModel() -> CartViewModel {
+        CartViewModel(repository: cartRepository)
     }
 }

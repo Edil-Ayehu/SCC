@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductResponse: Decodable, Identifiable, Hashable {
+struct ProductResponse: Codable, Identifiable, Hashable {
 
     let id: String
     let name: String
@@ -26,7 +26,7 @@ struct ProductResponse: Decodable, Identifiable, Hashable {
     }
 }
 
-struct ProductCategory: Decodable, Hashable {
+struct ProductCategory: Codable, Hashable {
 
     let id: String
     let name: String

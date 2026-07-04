@@ -9,7 +9,9 @@ import SwiftUI
 
 struct CartItemCard: View {
 
-    @Binding var item: CartItem
+    let item: CartItem
+    
+    @EnvironmentObject var cartVM: CartViewModel
 
     var body: some View {
 
@@ -24,12 +26,20 @@ struct CartItemCard: View {
                         .foregroundColor(.gray)
                 }
 
-            Text(item.name)
+            Text(item.product.name)
                 .font(.custom("Outfit-Regular", size: 16))
 
             Spacer()
 
-            QuantityStepper(quantity: $item.quantity)
+            QuantityStepper(
+                quantity: item.quantity,
+                onIncrease: {
+                    cartVM.increase(item)
+                },
+                onDecrease: {
+                    cartVM.decrease(item)
+                }
+            )
         }
         .padding()
         .background(Color.white)

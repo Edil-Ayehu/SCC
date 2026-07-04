@@ -9,17 +9,15 @@ import SwiftUI
 
 struct QuantityStepper: View {
 
-    @Binding var quantity: Int
+    let quantity: Int
+    let onIncrease: () -> Void
+    let onDecrease: () -> Void
 
     var body: some View {
 
         HStack(spacing: 14) {
 
-            Button {
-                if quantity > 1 {
-                    quantity -= 1
-                }
-            } label: {
+            Button (action: onDecrease) {
 
                 Circle()
                     .fill(Color.gray.opacity(0.12))
@@ -34,9 +32,7 @@ struct QuantityStepper: View {
                 .font(.custom("Outfit-SemiBold", size: 20))
                 .frame(minWidth: 24)
 
-            Button {
-                quantity += 1
-            } label: {
+            Button (action: onIncrease) {
 
                 Circle()
                     .fill(Color.indigo)

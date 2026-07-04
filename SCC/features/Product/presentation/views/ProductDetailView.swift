@@ -12,6 +12,8 @@ struct ProductDetailView: View {
     let product: ProductResponse
 
     @State private var quantity = 1
+    
+    @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
 
     var body: some View {
 
@@ -64,39 +66,6 @@ struct ProductDetailView: View {
                             
                             Divider()
                         }
-
-
-                        HStack {
-
-                            Text("Quantity")
-                                .font(.custom("Outfit-SemiBold", size: 16))
-
-                            Spacer()
-
-                            HStack(spacing: 20) {
-
-                                Button {
-                                    if quantity > 1 {
-                                        quantity -= 1
-                                    }
-                                } label: {
-                                    Image(systemName: "minus")
-                                }
-
-                                Text("\(quantity)")
-                                    .font(.custom("Outfit-SemiBold", size: 16))
-
-                                Button {
-                                    quantity += 1
-                                } label: {
-                                    Image(systemName: "plus")
-                                }
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
-                            .background(Color.gray.opacity(0.1))
-                            .clipShape(Capsule())
-                        }
                     }
                     .padding(.horizontal,10)
                 }
@@ -106,7 +75,7 @@ struct ProductDetailView: View {
             CustomButton(
                 title: "Add to Cart",
                 action: {
-
+                    cartVM.add(product: product)
                 },
                 height: 56
             )
