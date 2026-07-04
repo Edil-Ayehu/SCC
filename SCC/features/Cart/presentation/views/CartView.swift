@@ -118,7 +118,7 @@ struct CartView: View {
             if showDialog {
                 ZStack {
                     // Dark background
-                    Color.black.opacity(0.4)
+                    Color.black.opacity(0.6)
                         .ignoresSafeArea()
                         .onTapGesture {
                             showDialog = false
