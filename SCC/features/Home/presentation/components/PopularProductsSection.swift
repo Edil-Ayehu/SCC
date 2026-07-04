@@ -21,6 +21,8 @@ struct PopularProductsSection: View {
     
     @EnvironmentObject var router: AppRouter
     
+    @Binding var showToast: Bool
+    
     var body: some View {
 
         VStack(alignment: .leading, spacing: 16) {
@@ -45,7 +47,7 @@ struct PopularProductsSection: View {
             LazyVGrid(columns: columns, spacing: 16) {
 
                 ForEach(vm.products.prefix(4)) { product in
-                    ProductCard(product: product)
+                    ProductCard(product: product, showToast: $showToast)
                         .onTapGesture {
                             router.push(.productDetails(product))
                         }

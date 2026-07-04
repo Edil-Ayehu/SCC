@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct ProductCard: View {
 
     let product: ProductResponse
     
     @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
+    
+    @Binding var showToast: Bool
 
     var body: some View {
 
@@ -38,7 +41,9 @@ struct ProductCard: View {
                     Spacer()
 
                     Button {
-                        cartVM.add(product: product)
+                        if cartVM.add(product: product) {
+                            showToast = true
+                        }
                     } label: {
                         Image(systemName: "plus")
                             .font(.system(size: 16, weight: .bold))

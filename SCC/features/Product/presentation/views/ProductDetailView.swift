@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct ProductDetailView: View {
 
@@ -14,6 +15,8 @@ struct ProductDetailView: View {
     @State private var quantity = 1
     
     @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
+    
+    @State private var showToast = false
 
     var body: some View {
 
@@ -75,7 +78,9 @@ struct ProductDetailView: View {
             CustomButton(
                 title: "Add to Cart",
                 action: {
-                    cartVM.add(product: product)
+                    if cartVM.add(product: product) {
+                        showToast = true
+                    }
                 },
                 height: 56
             )
@@ -83,5 +88,12 @@ struct ProductDetailView: View {
         }
         .navigationTitle("Product Details")
         .navigationBarTitleDisplayMode(.inline)
+        .toast(isPresenting: $showToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "\(product.name) added to Cart!"
+            )
+        }
     }
 }

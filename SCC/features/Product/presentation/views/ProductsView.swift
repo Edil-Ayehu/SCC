@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import AlertToast
 
 struct Product: Identifiable, Hashable {
     let id = UUID()
@@ -27,6 +28,8 @@ struct ProductsView: View {
     
     @EnvironmentObject private var router: AppRouter
     @EnvironmentObject var vm : ProductViewModel
+    
+    @State private var showToast = false
     
 
     var body: some View {
@@ -67,7 +70,7 @@ struct ProductsView: View {
                             }
                         } else {
                             ForEach(vm.products) { product in
-                                ProductCard(product: product)
+                                ProductCard(product: product, showToast: $showToast)
                                     .onTapGesture {
                                         router.push(.productDetails(product))
                                     }
@@ -83,8 +86,12 @@ struct ProductsView: View {
 
         }
         .background(Color.white)
-//        .task {
-//            await vm.loadProducts()
-//        }
+        .toast (isPresenting: $showToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "Added to Cart!"
+            )
+        }
     }
 }

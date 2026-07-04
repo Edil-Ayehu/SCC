@@ -19,6 +19,7 @@ struct EventCard: View {
                 url: event.bannerImage,
                 height: 180,
                 cornerRadius: 20,
+                padding: 80
             )
             .frame(width: 240)
 

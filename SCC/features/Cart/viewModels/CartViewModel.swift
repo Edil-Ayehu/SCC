@@ -23,12 +23,14 @@ final class CartViewModel: ObservableObject {
         items = repository.loadCart()
     }
 
-    func add(product: ProductResponse) {
+    func add(product: ProductResponse) -> Bool {
         do {
             try repository.add(product: product)
             loadCart()
+            return true
         } catch {
             print(error)
+            return false
         }
     }
 

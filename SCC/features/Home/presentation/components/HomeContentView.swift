@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct HomeContentView: View {
     @Binding var selectedTab: Tab
     
     @EnvironmentObject var vm: ProductViewModel
+    
+    @State private var showToast = false
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -22,7 +25,7 @@ struct HomeContentView: View {
 
                     UpcomingEventsSection()
                     
-                    PopularProductsSection(selectedTab: $selectedTab)
+                    PopularProductsSection(selectedTab: $selectedTab, showToast: $showToast)
 
 //                    StoresSection()
                 }
@@ -31,6 +34,13 @@ struct HomeContentView: View {
             }
         }
         .ignoresSafeArea(edges: .top)
+        .toast (isPresenting: $showToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "Added to Cart!"
+            )
+        }
     }
 }
 
