@@ -14,6 +14,10 @@ struct CartView: View {
     @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
     
     @State private var showDialog = false
+    
+    @StateObject private var voucherVM = DIContainer.shared.makeVoucherViewModel()
+    
+    @State private var generatedVoucherCode: String = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -71,8 +75,17 @@ struct CartView: View {
                     CustomButton(
                         title: "Generate Voucher",
                         action: {
-                            showDialog = true
+                            Task {
+                                
+                                await voucherVM.generateVoucher(cartItems: cartVM.items)
+                                
+                                if voucherVM.voucher != nil {
+                                    generatedVoucherCode = voucherVM.voucher!.code
+                                    showDialog = true
+                                }
+                            }
                         },
+                        isLoading: voucherVM.isLoading,
                         height: 42
                     )
 
@@ -112,7 +125,7 @@ struct CartView: View {
                         }
                     
                     OrderSuccessDialog(
-                        voucherCode: "ABC12345",
+                        voucherCode: generatedVoucherCode,
                         onDone: {
                             showDialog = false
                             // clear cart

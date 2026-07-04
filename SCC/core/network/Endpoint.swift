@@ -55,6 +55,9 @@ enum Endpoint {
     
     // MARK: Orders
     
+    // MARK: Voucher
+    static let generateVoucher = "\(baseUrl)/vouchers"
+    
     // MARK: Events
     enum Event {
         static let list = "\(baseUrl)/events/active"

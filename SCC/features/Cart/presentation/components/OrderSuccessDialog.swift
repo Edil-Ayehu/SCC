@@ -32,12 +32,12 @@ struct OrderSuccessDialog: View {
             Spacer().frame(height: 8)
 
             Image(systemName: "bag")
-                .font(.system(size: 52))
+                .font(.system(size: 32))
                 .foregroundColor(.green)
                 .background(
                     Circle()
                         .fill(Color.green.opacity(0.1))
-                        .frame(width: 80, height: 80)
+                        .frame(width: 60, height: 60)
                 )
 
             Spacer().frame(height: 24)
@@ -51,7 +51,7 @@ struct OrderSuccessDialog: View {
             Spacer().frame(height: 10)
 
             Text("Your items are reserved and ready for pickup.")
-                .font(.custom("Outfit-Regular", size: 14))
+                .font(.custom("Outfit-Regular", size: 12))
                 .foregroundStyle(.gray)
                 .multilineTextAlignment(.center)
 
@@ -71,7 +71,7 @@ struct OrderSuccessDialog: View {
                 HStack {
 
                     Text(voucherCode)
-                        .font(.custom("Outfit-Bold", size: 18))
+                        .font(.custom("Outfit-Bold", size: 14))
                         .foregroundColor(.primaryPurple)
 
                     Spacer().frame(width: 30)
