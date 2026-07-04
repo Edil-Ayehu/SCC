@@ -40,29 +40,16 @@ struct ProductCard: View {
                     Button {
                         cartVM.add(product: product)
                     } label: {
-                        if cartVM.isProductInCart(product.id) {
-                            Image(systemName: "checkmark.circle")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.white)
-                                .frame(width: 34, height: 34)
-                                .background(
-                                    Circle()
-                                        .fill(Color(red: 20/255,
-                                                    green: 27/255,
-                                                    blue: 93/255))
-                                )
-                        } else {
-                            Image(systemName: "plus")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.white)
-                                .frame(width: 34, height: 34)
-                                .background(
-                                    Circle()
-                                        .fill(Color(red: 20/255,
-                                                    green: 27/255,
-                                                    blue: 93/255))
-                                )
-                        }
+                        Image(systemName: "plus")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: 34, height: 34)
+                            .background(
+                                Circle()
+                                    .fill(Color(red: 20/255,
+                                                green: 27/255,
+                                                blue: 93/255))
+                            )
                     }
                 }
             }
