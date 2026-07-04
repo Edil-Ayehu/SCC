@@ -12,6 +12,8 @@ struct CartView: View {
 //    @EnvironmentObject var cartVM: CartViewModel
     
     @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
+    
+    @State private var showDialog = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -21,17 +23,21 @@ struct CartView: View {
                 Spacer()
 
                 Text("My Cart")
-                    .font(.custom("Outfit-SemiBold", size: 22))
+                    .font(.custom("Outfit-Medium", size: 16))
 
                 Spacer()
-
-                Button {
-                    cartVM.clearCart()
-                } label: {
-                    Image(systemName: "trash")
-                        .font(.title2)
-                        .foregroundColor(.red)
+                
+                if (!cartVM.items.isEmpty) {
+                    Button {
+                        cartVM.clearCart()
+                    } label: {
+                        Image(systemName: "trash")
+                            .font(.title2)
+                            .foregroundColor(.red)
+                    }
                 }
+
+                
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
@@ -64,7 +70,9 @@ struct CartView: View {
                     
                     CustomButton(
                         title: "Generate Voucher",
-                        action: {},
+                        action: {
+                            showDialog = true
+                        },
                         height: 42
                     )
 
@@ -93,5 +101,32 @@ struct CartView: View {
             cartVM.loadCart()
         }
         .background(Color.white)
+        .overlay {
+            if showDialog {
+                ZStack {
+                    // Dark background
+                    Color.black.opacity(0.4)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            showDialog = false
+                        }
+                    
+                    OrderSuccessDialog(
+                        voucherCode: "ABC12345",
+                        onDone: {
+                            showDialog = false
+                            // clear cart
+                            cartVM.clearCart()
+                        },
+                        onCopy: {
+                            // implement copy functionality
+                        }
+                    )
+                    .padding(.horizontal, 24)
+                    .transition(.scale.combined(with: .opacity))
+                }
+            }
+        }
+        .animation(.easeInOut(duration: 0.25), value: showDialog)
     }
 }

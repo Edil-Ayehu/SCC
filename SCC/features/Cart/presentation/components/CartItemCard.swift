@@ -19,7 +19,7 @@ struct CartItemCard: View {
 
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.gray.opacity(0.08))
-                .frame(width: 80, height: 80)
+                .frame(width: 50, height: 50)
                 .overlay {
                     Image(systemName: "photo")
                         .font(.title2)
@@ -27,7 +27,7 @@ struct CartItemCard: View {
                 }
 
             Text(item.product.name)
-                .font(.custom("Outfit-Regular", size: 16))
+                .font(.custom("Outfit-Regular", size: 14))
 
             Spacer()
 
@@ -41,7 +41,7 @@ struct CartItemCard: View {
                 }
             )
         }
-        .padding()
+        .padding(8)
         .background(Color.white)
         .cornerRadius(22)
         .shadow(color: .black.opacity(0.04), radius: 8, y: 3)

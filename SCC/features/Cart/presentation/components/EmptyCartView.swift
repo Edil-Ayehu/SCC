@@ -22,10 +22,10 @@ struct EmptyCartView: View {
             VStack(spacing: 8) {
 
                 Text("Your cart is empty")
-                    .font(.custom("Outfit-SemiBold", size: 22))
+                    .font(.custom("Outfit-Medium", size: 18))
 
                 Text("Looks like you haven't added any products yet.")
-                    .font(.custom("Outfit-Regular", size: 15))
+                    .font(.custom("Outfit-Regular", size: 14))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
