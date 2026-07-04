@@ -8,19 +8,6 @@
 import SwiftUI
 
 struct UpcomingEventsSection: View {
-
-    let events = [
-        Event(
-            title: "Grand Wedding Banquet",
-            category: "Wedding Event",
-            image: "event1"
-        ),
-        Event(
-            title: "Ethiopian New Year Celebration",
-            category: "Holiday",
-            image: "event2"
-        )
-    ]
     
     @State private var selectedEvent: EventResponse?
     

@@ -8,3 +8,4 @@
 protocol EventRepository {
     func fetchEvents() async throws -> [EventResponse]
 }
+

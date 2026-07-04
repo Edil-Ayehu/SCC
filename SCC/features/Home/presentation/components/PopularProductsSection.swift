@@ -12,21 +12,14 @@ struct PopularProductsSection: View {
     
     @Binding var selectedTab: Tab
 
-    let products: [Product] = [
-        .init(category: "Household", name: "Test", imageName: "store"),
-        .init(category: "Bakery", name: "Teff", imageName: "store3"),
-        .init(category: "Oil", name: "new product", imageName: "store2"),
-        .init(category: "Oil", name: "Cooking Oil 5L", imageName: "store3"),
-//        .init(category: "Grains", name: "Bulk Rice 10kg", imageName: "store4"),
-//        .init(category: "Oil", name: "Pro 20", imageName: "store4")
-    ]
-
     let columns = [
         GridItem(.flexible(), spacing: 10),
         GridItem(.flexible(), spacing: 10)
     ]
     
     @EnvironmentObject var router: AppRouter
+    
+    @StateObject private var vm = DIContainer.shared.makeProductViewModel()
 
     var body: some View {
 
@@ -49,18 +42,21 @@ struct PopularProductsSection: View {
             }
             .padding(.horizontal, 20)
 
-//            LazyVGrid(columns: columns, spacing: 16) {
-//
-//                ForEach(products) { product in
-//                    ProductCard(product: product)
-//                        .onTapGesture {
-//                            router.push(.productDetails(product))
-//                        }
-//                }
-//            }
-//            .padding(.horizontal, 20)
+            LazyVGrid(columns: columns, spacing: 16) {
+
+                ForEach(vm.products.prefix(4)) { product in
+                    ProductCard(product: product)
+                        .onTapGesture {
+                            router.push(.productDetails(product))
+                        }
+                }
+            }
+            .padding(.horizontal, 20)
             
             Spacer().frame(height: 10)
+        }
+        .task {
+            await vm.loadProducts()
         }
     }
 }
