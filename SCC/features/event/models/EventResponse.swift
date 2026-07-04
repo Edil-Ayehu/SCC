@@ -18,7 +18,6 @@ struct EventResponse: Decodable, Identifiable, Hashable {
     let eventType: String
     let address: String?
     let isActive: Bool
-    let store: EventStore?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -30,23 +29,6 @@ struct EventResponse: Decodable, Identifiable, Hashable {
         case eventType
         case address
         case isActive
-        case store
     }
 }
 
-struct EventStore: Decodable, Hashable {
-
-    let id: String
-    let name: String
-    let location: String
-    let logo: String?
-    let isActive: Bool
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case location
-        case logo
-        case isActive
-    }
-}

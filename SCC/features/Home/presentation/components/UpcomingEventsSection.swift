@@ -63,7 +63,7 @@ struct UpcomingEventsSection: View {
             EventDetailSheet(event: event)
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.medium, .large])
-                .cornerRadius(20)
+                .cornerRadius(32)
             
         }
     }

@@ -26,10 +26,10 @@ struct EventCard: View {
 
                 Text(event.eventType)
                     .font(.custom("Outfit-Medium", size: 12))
-                    .foregroundColor(.pink)
+                    .foregroundColor(.primaryPurple)
 
                 Text(event.title)
-                    .font(.custom("Outfit-SemiBold", size: 14))
+                    .font(.custom("Outfit-Medium", size: 14))
 
                 Label("Starts: Sep 17, 2026", systemImage: "clock")
                     .font(.caption)

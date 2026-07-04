@@ -2,20 +2,14 @@ import SwiftUI
 import AlertToast
 
 struct SignInView: View {
-    @State private var phoneNumber = "0930884402"
-    @State private var password = "123456"
-    @State private var _isLoading: Bool = false
-    
-    var isValid: Bool {
-        phoneNumber.count >= 10 && password.count >= 6
-    }
-    
+
     @EnvironmentObject private var router: AppRouter
     
     @StateObject private var vm = DIContainer.shared.makeSignInViewModel()
     
     @State private var showToast = false
     @State private var toastMessage = ""
+    
 
     var body: some View {
             VStack(spacing: 24) {
@@ -31,7 +25,6 @@ struct SignInView: View {
                 VStack(spacing: 16) {
                     
                     CustomTextField(
-//                        text: $phoneNumber,
                         text: $vm.phoneNumber,
                         placeholder: "Enter phone number",
                         label: "Phone number",
@@ -41,7 +34,6 @@ struct SignInView: View {
                     
                     
                     CustomTextField(
-//                        text: $password,
                         text: $vm.password,
                         placeholder: "Enter password",
                         label: "Password",
@@ -59,7 +51,6 @@ struct SignInView: View {
                     Spacer()
                     
                     Button {
-                        // handle navigation to forgot password screen
                         router.push(.forgotPassword)
                     } label: {
                         Text("Forgot Password?")
@@ -74,7 +65,6 @@ struct SignInView: View {
                 
                 CustomButton(
                     title: "Continue",
-//                    action: _handleSignIn,
                     action: {
                         Task {
                             await vm.login()

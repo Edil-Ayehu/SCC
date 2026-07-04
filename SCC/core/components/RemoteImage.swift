@@ -12,6 +12,7 @@ struct RemoteImage: View {
     let url: String?
     var height: CGFloat = 120
     var cornerRadius: CGFloat = 18
+    var padding: CGFloat = 30
 
     private var imageURL: URL? {
         guard
@@ -58,9 +59,9 @@ struct RemoteImage: View {
     private var placeholder: some View {
         Image(systemName: "photo")
             .resizable()
-            .scaledToFit()
-            .foregroundColor(.gray)
-            .padding(30)
+            .scaledToFill()
+            .foregroundColor(.gray.opacity(0.3))
+            .padding(padding)
             .background(Color.gray.opacity(0.1))
     }
 }
