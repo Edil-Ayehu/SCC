@@ -26,7 +26,7 @@ enum Endpoint {
             var components = URLComponents(string: "\(baseUrl)/products")!
 
             var items: [URLQueryItem] = [
-//                URLQueryItem(name: "catalog", value: "true")
+                URLQueryItem(name: "catalog", value: "true")
             ]
 
             if let category,

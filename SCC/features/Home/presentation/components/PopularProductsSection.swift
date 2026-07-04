@@ -11,6 +11,8 @@ import SwiftUI
 struct PopularProductsSection: View {
     
     @Binding var selectedTab: Tab
+    
+    @EnvironmentObject var vm: ProductViewModel
 
     let columns = [
         GridItem(.flexible(), spacing: 10),
@@ -19,8 +21,6 @@ struct PopularProductsSection: View {
     
     @EnvironmentObject var router: AppRouter
     
-    @StateObject private var vm = DIContainer.shared.makeProductViewModel()
-
     var body: some View {
 
         VStack(alignment: .leading, spacing: 16) {
@@ -54,9 +54,6 @@ struct PopularProductsSection: View {
             .padding(.horizontal, 20)
             
             Spacer().frame(height: 10)
-        }
-        .task {
-            await vm.loadProducts()
         }
     }
 }

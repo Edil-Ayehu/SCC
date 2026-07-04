@@ -9,6 +9,9 @@ import SwiftUI
 
 struct HomeContentView: View {
     @Binding var selectedTab: Tab
+    
+    @EnvironmentObject var vm: ProductViewModel
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {

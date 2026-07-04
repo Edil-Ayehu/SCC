@@ -26,9 +26,8 @@ struct ProductsView: View {
     ]
     
     @EnvironmentObject private var router: AppRouter
+    @EnvironmentObject var vm : ProductViewModel
     
-        
-    @StateObject private var vm = DIContainer.shared.makeProductViewModel()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -84,8 +83,8 @@ struct ProductsView: View {
 
         }
         .background(Color.white)
-        .task {
-            await vm.loadProducts()
-        }
+//        .task {
+//            await vm.loadProducts()
+//        }
     }
 }

@@ -11,6 +11,8 @@ struct HomeView: View {
     
     @State private var selectedTab: Tab = .home
     
+    @StateObject private var vm = DIContainer.shared.makeProductViewModel()
+        
     var body: some View {
         TabView (selection: $selectedTab) {
             HomeContentView(selectedTab: $selectedTab)
@@ -20,6 +22,7 @@ struct HomeView: View {
                     Text("Home")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+                .environmentObject(vm)
                 .tag(Tab.home)
 
             ProductsView()
@@ -29,6 +32,7 @@ struct HomeView: View {
                     Text("Products")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+                .environmentObject(vm)
                 .tag(Tab.products)
 
             Text("Vouchers")
@@ -57,6 +61,9 @@ struct HomeView: View {
                         .font(.custom("Outfit-Regular", size: 12))
                 }
                 .tag(Tab.profile)
+        }
+        .task {
+            await vm.loadProducts()
         }
     }
 }
