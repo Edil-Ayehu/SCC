@@ -30,12 +30,21 @@ struct EventCard: View {
 
                 Text(event.title)
                     .font(.custom("Outfit-Medium", size: 14))
+                
+                Label(
+                    "Starts: \(event.startDate.formattedDate(to: "MMM d, yyyy • h:mm a"))",
+                    systemImage: "clock"
+                )
+                .font(.custom("Outfit-Medium", size: 12))
+                .foregroundColor(.black.opacity(0.6))
 
-                Label("Starts: Sep 17, 2026", systemImage: "clock")
-                    .font(.caption)
-
-                Label("Ends: Sep 25, 2026", systemImage: "flag")
-                    .font(.caption)
+                
+                Label(
+                    "Ends: \(event.endDate.formattedDate(to: "MMM d, yyyy • h:mm a"))",
+                    systemImage: "flag"
+                )
+                .font(.custom("Outfit-Medium", size: 12))
+                .foregroundColor(.black.opacity(0.6))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(16)

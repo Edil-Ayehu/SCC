@@ -20,15 +20,15 @@ struct EventDetailSheet: View {
             )
 
             Text(event.eventType)
-                .font(.custom("Outfit-Regular", size: 12))
-                .foregroundColor(.blue)
+                .font(.custom("Outfit-SemiBold", size: 12))
+                .foregroundColor(.primaryPurple)
 
             Text(event.title)
-                .font(.custom("Outfit-Regular", size: 18))
-                .bold()
+                .font(.custom("Outfit-Medium", size: 16))
 
             Text(event.description)
                 .font(.custom("Outfit-Regular", size: 12))
+                .foregroundColor(.secondary)
 
             Spacer()
         }
