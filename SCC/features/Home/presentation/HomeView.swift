@@ -44,7 +44,7 @@ struct HomeView: View {
                 }
                 .tag(Tab.vouchers)
 
-            Text("Cart")
+            CartView()
                 .tabItem {
                     Image(systemName: "cart.fill")
                         .font(.system(size: 18))
