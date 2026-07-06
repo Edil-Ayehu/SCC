@@ -56,7 +56,8 @@ struct HomeView: View {
 //                .environmentObject(cartVM)
                 .tag(Tab.cart)
 
-            Text("Profile")
+//            Text("Profile")
+            ProfileView()
                 .tabItem {
                     Image(systemName: "person.fill")
                         .font(.system(size: 18))
