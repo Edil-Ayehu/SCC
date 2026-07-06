@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+import UIKit
+import AlertToast
 
 struct CartView: View {
-    
-//    @EnvironmentObject var cartVM: CartViewModel
-    
+        
     @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
     
     @State private var showDialog = false
@@ -18,6 +18,10 @@ struct CartView: View {
     @StateObject private var voucherVM = DIContainer.shared.makeVoucherViewModel()
     
     @State private var generatedVoucherCode: String = ""
+    
+    @State private var showClearCartConfirmation = false
+    
+    @State private var showCopyToast = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -33,7 +37,7 @@ struct CartView: View {
                 
                 if (!cartVM.items.isEmpty) {
                     Button {
-                        cartVM.clearCart()
+                        showClearCartConfirmation = true
                     } label: {
                         Image(systemName: "trash")
                             .font(.title2)
@@ -114,6 +118,23 @@ struct CartView: View {
             cartVM.loadCart()
         }
         .background(Color.white)
+        .toast(isPresenting: $showCopyToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "Voucher code copied"
+            )
+        }
+        .alert("Clear Cart?", isPresented: $showClearCartConfirmation) {
+            Button("Cancel", role: .cancel) {}
+            
+            Button("Clear", role: .destructive) {
+                cartVM.clearCart()
+            }
+        } message: {
+            Text("Are you sure you want to remove all items from your cart?")
+                .font(.custom("Outfit-Regular", size: 12))
+        }
         .overlay {
             if showDialog {
                 ZStack {
@@ -133,6 +154,10 @@ struct CartView: View {
                         },
                         onCopy: {
                             // implement copy functionality
+                            UIPasteboard.general.string = generatedVoucherCode
+                            showCopyToast = true
+                            showDialog = false
+                            cartVM.clearCart()
                         }
                     )
                     .padding(.horizontal, 24)

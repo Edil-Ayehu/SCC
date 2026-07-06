@@ -11,12 +11,12 @@ struct OrderSuccessDialog: View {
 
     let voucherCode: String
     let onDone: () -> Void
-    let onCopy: (() -> Void)?
+    let onCopy: () -> Void
 
     init(
         voucherCode: String,
         onDone: @escaping () -> Void,
-        onCopy: (() -> Void)? = nil
+        onCopy: @escaping () -> Void,
     ) {
         self.voucherCode = voucherCode
         self.onDone = onDone
@@ -78,7 +78,7 @@ struct OrderSuccessDialog: View {
                     
                     CustomButton(
                         title: "Copy Code",
-                        action: {},
+                        action: onCopy,
                         height: 38
                     )
 

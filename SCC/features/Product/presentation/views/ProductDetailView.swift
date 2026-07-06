@@ -76,12 +76,13 @@ struct ProductDetailView: View {
             }
 
             CustomButton(
-                title: "Add to Cart",
+                title: cartVM.isProductInCart(product.id) ? "Already in Cart" : "Add to Cart",
                 action: {
                     if cartVM.add(product: product) {
                         showToast = true
                     }
                 },
+                isEnabled: cartVM.isProductInCart(product.id) == false,
                 height: 56
             )
             .padding()
@@ -90,7 +91,7 @@ struct ProductDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toast(isPresenting: $showToast) {
             AlertToast(
-                displayMode: .hud,
+                displayMode: .alert,
                 type: .complete(.green),
                 title: "\(product.name) added to Cart!"
             )
