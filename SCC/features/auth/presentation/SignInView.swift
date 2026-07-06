@@ -7,7 +7,6 @@ struct SignInView: View {
     
     @StateObject private var vm = DIContainer.shared.makeSignInViewModel()
     
-    @State private var showToast = false
     @State private var toastMessage = ""
     
 
@@ -96,15 +95,6 @@ struct SignInView: View {
             }
             .padding(.horizontal, 24)
             .navigationBarHidden(true)
-            .onChange(of: vm.errorMessage) {error in
-                if let error {
-                    print(error)
-                        // show an alert or toast here
-                    showToast = true
-                    toastMessage = error
-                    
-                }
-            }
             .onChange(of: vm.isLoggedIn) { isLoggedIn in
                 if isLoggedIn {
                     router.setRoot(.home)
@@ -112,16 +102,16 @@ struct SignInView: View {
                 }
                 
             }
-            .toast(isPresenting: $showToast, duration: 2, tapToDismiss: true) {
-                AlertToast(
-                    displayMode: .hud,
-                    type: .error(.red),
-                    title: toastMessage
+            .alert(
+                "Error",
+                isPresented: Binding(
+                    get: {vm.errorMessage != nil},
+                    set: {_ in vm.errorMessage = nil}
                 )
-            } onTap: {
-                showToast = false
-            } completion: {
-                showToast = false
+            ) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(vm.errorMessage ?? "Something went wrong!")
             }
     }
     

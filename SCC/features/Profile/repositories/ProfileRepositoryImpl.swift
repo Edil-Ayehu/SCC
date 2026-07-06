@@ -17,4 +17,14 @@ final class ProfileRepositoryImpl: ProfileRepository {
             endpoint: Endpoint.profile,
         )
     }
+    
+    func changePassword(
+        request: ChangePasswordRequest
+    ) async throws -> ChangePasswordResponse {
+        try await apiClient.request(
+            endpoint: Endpoint.changePassword,
+            method: "POST",
+            body: request
+        )
+    }
 }

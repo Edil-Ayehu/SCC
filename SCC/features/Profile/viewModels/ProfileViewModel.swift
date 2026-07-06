@@ -15,6 +15,8 @@ final class ProfileViewModel: ObservableObject {
     
     @Published var errorMessage: String?
     
+    @Published var successMessage: String?
+    
     private let repository: ProfileRepository
     
     init(repository: ProfileRepository) {
@@ -27,6 +29,7 @@ final class ProfileViewModel: ObservableObject {
         
         errorMessage = nil
         
+        
         defer {
             isLoading = false
         }
@@ -34,6 +37,35 @@ final class ProfileViewModel: ObservableObject {
         do {
             
             profile = try await repository.getProfile()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func changePassword(
+        oldPassword: String,
+        newPassword: String
+    ) async {
+        
+        isLoading = true
+        errorMessage = nil
+        successMessage = nil
+        
+        defer {
+            isLoading = false
+        }
+        
+        do {
+            let request = ChangePasswordRequest(
+                oldPassword: oldPassword, newPassword: newPassword
+            )
+            
+            let response = try await repository.changePassword(
+                request: request
+            )
+            
+            successMessage = response.message
+            
         } catch {
             errorMessage = error.localizedDescription
         }

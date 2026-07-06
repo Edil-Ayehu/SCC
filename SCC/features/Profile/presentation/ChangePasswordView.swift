@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct ChangePasswordView: View {
 
@@ -18,7 +19,12 @@ struct ChangePasswordView: View {
     @State private var showOldPassword = false
     @State private var showNewPassword = false
     @State private var showConfirmPassword = false
-
+    
+    @State private var showToast = false
+    
+    @StateObject var profileVM =  DIContainer.shared.makeProfileViewModel()
+    
+    
     var body: some View {
 
         VStack(spacing: 0) {
@@ -99,14 +105,59 @@ struct ChangePasswordView: View {
             CustomButton(
                 title: "Change Password",
                 action: {
-                    print("Password changed successfully!")
+                    guard !oldPassword.isEmpty,
+                          !newPassword.isEmpty,
+                          !confirmPassword.isEmpty else {
+                        profileVM.errorMessage = "Please fill in all fields."
+                        return
+                    }
+                    
+                    guard newPassword == confirmPassword else {
+                        profileVM.errorMessage = "Passwords do not match."
+                        return
+                    }
+                    
+                    Task {
+                        await profileVM.changePassword(
+                            oldPassword: oldPassword,
+                            newPassword: newPassword
+                        )
+                    }
                 },
+                isLoading: profileVM.isLoading,
                 height: 48
             )
             .padding(20)
         }
         .navigationBarBackButtonHidden()
         .background(Color.white)
+        .onChange(of: profileVM.successMessage) { _, message in
+            guard message != nil else { return }
+            
+            showToast = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                dismiss()
+            }
+        }
+        .toast(isPresenting: $showToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: profileVM.successMessage
+            )
+        }
+        .alert(
+            "Error",
+            isPresented: Binding(
+                get: { profileVM.errorMessage != nil},
+                set: { _ in profileVM.errorMessage = nil}
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(profileVM.errorMessage ?? "Something went wrong!")
+        }
     }
 }
 

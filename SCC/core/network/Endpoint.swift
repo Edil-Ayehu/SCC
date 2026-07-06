@@ -61,6 +61,9 @@ enum Endpoint {
     // MARK: Prifle
     static let profile = "\(baseUrl)/auth/me"
     
+    static let changePassword = "\(baseUrl)/auth/change-password"
+    
+    
     // MARK: Events
     enum Event {
         static let list = "\(baseUrl)/events/active"

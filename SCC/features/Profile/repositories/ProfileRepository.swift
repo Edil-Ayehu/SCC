@@ -8,4 +8,8 @@
 protocol ProfileRepository {
     
     func getProfile() async throws -> ProfileResponse
+    
+    func changePassword(
+        request: ChangePasswordRequest
+    ) async throws -> ChangePasswordResponse
 }
