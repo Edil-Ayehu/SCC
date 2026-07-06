@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    @EnvironmentObject var vm: ProfileViewModel
 
     var body: some View {
+        
 
         VStack(spacing: 0) {
 
@@ -38,26 +41,32 @@ struct ProfileView: View {
 
                         VStack(spacing: 4) {
 
-                            Text("Edil Ayehu")
+                            Text(vm.profile!.name)
                                 .font(.custom("Outfit-Medium", size: 20))
+                            
+                            if (vm.profile!.email != nil) {
+                                Text(vm.profile!.email!)
+                                    .font(.custom("Outfit-Regular", size: 14))
+                                    .foregroundColor(.gray)
+                            }
 
-                            Text("lucky@gmail.com")
-                                .font(.custom("Outfit-Regular", size: 14))
-                                .foregroundColor(.gray)
+                            
                         }
 
                         HStack(spacing: 8) {
 
-                            Image(systemName: "checkmark.circle.fill")
+                            Image(systemName: vm.profile!.isActive ? "checkmark.circle.fill" : "chevron.compact.down")
                                 .foregroundColor(.green)
+                            
+                            
 
-                            Text("Active Customer")
+                            Text(vm.profile!.isActive ? "Active Customer" : "InActive Customer")
                                 .font(.custom("Outfit-Medium", size: 15))
-                                .foregroundColor(.green)
+                                .foregroundColor(vm.profile!.isActive ? .green : .orange)
                         }
                         .padding(.horizontal, 18)
                         .padding(.vertical, 10)
-                        .background(Color.green.opacity(0.12))
+                        .background(vm.profile!.isActive ? Color.green.opacity(0.12): Color.orange.opacity(0.12))
                         .clipShape(Capsule())
                     }
 
@@ -71,13 +80,13 @@ struct ProfileView: View {
                         ProfileInfoRow(
                             icon: "phone",
                             title: "Phone Number",
-                            value: "+27930884402"
+                            value: vm.profile!.phone,
                         )
 
                         ProfileInfoRow(
                             icon: "calendar",
                             title: "Member Since",
-                            value: "Jun 10, 2026"
+                            value: vm.profile!.updatedAt.formattedDate()
                         )
                     }
 
@@ -165,6 +174,9 @@ struct ProfileView: View {
             }
         }
         .background(Color.white)
+//        .task {
+//            await profileVM.loadProfile()
+//        }
     }
 }
 

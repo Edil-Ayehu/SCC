@@ -42,6 +42,10 @@ final class DIContainer {
         VoucherRepositoryImpl(apiClient: apiClient)
     } ()
     
+    lazy var profileRepository: ProfileRepository = {
+        ProfileRepositoryImpl(apiClient: apiClient)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -74,5 +78,9 @@ final class DIContainer {
     
     func makeVoucherViewModel() -> VoucherViewModel {
         VoucherViewModel(repository: voucherRepository)
+    }
+    
+    func makeProfileViewModel() -> ProfileViewModel {
+        ProfileViewModel(repository: profileRepository)
     }
 }

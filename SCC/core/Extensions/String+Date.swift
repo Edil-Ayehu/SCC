@@ -22,18 +22,39 @@ extension String {
         return formatter.string(from: date)
     }
     
+//    func formattedDate(
+//        from inputFormatter: ISO8601DateFormatter = ISO8601DateFormatter(),
+//        to outputFormat: String = "MMM d, yyyy"
+//    ) -> String {
+//
+//        guard let date = inputFormatter.date(from: self) else {
+//            return self
+//        }
+//
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = outputFormat
+//
+//        return formatter.string(from: date)
+//    }
+    
     func formattedDate(
-        from inputFormatter: ISO8601DateFormatter = ISO8601DateFormatter(),
-        to outputFormat: String = "MMM d, yyyy"
+        from inputFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+        to outputFormat: String = "MMMM dd, yyyy"
     ) -> String {
+
+        let inputFormatter = DateFormatter()
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        inputFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        inputFormatter.dateFormat = inputFormat
 
         guard let date = inputFormatter.date(from: self) else {
             return self
         }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = outputFormat
+        let outputFormatter = DateFormatter()
+        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        outputFormatter.dateFormat = outputFormat
 
-        return formatter.string(from: date)
+        return outputFormatter.string(from: date)
     }
 }

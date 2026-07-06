@@ -33,7 +33,7 @@ struct EventCard: View {
                     .font(.custom("Outfit-Medium", size: 14))
                 
                 Label(
-                    "Starts: \(event.startDate.formattedDate(to: "MMM d, yyyy • h:mm a"))",
+                    "Starts: \(event.startDate.formattedDateTime())",
                     systemImage: "clock"
                 )
                 .font(.custom("Outfit-Medium", size: 12))
@@ -41,7 +41,7 @@ struct EventCard: View {
 
                 
                 Label(
-                    "Ends: \(event.endDate.formattedDate(to: "MMM d, yyyy • h:mm a"))",
+                    "Ends: \(event.endDate.formattedDateTime())",
                     systemImage: "flag"
                 )
                 .font(.custom("Outfit-Medium", size: 12))

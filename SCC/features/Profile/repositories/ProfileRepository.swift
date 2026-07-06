@@ -1,0 +1,11 @@
+//
+//  ProfileRepository.swift
+//  SCC
+//
+//  Created by Edil on 06/07/2026.
+//
+
+protocol ProfileRepository {
+    
+    func getProfile() async throws -> ProfileResponse
+}

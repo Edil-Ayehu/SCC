@@ -13,7 +13,7 @@ struct HomeView: View {
     
     @StateObject private var vm = DIContainer.shared.makeProductViewModel()
     
-//    @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
+    @StateObject private var profileVM = DIContainer.shared.makeProfileViewModel()
         
     var body: some View {
         TabView (selection: $selectedTab) {
@@ -65,9 +65,11 @@ struct HomeView: View {
                         .font(.custom("Outfit-Regular", size: 12))
                 }
                 .tag(Tab.profile)
+                .environmentObject(profileVM)
         }
         .task {
             await vm.loadProducts()
+            await profileVM.loadProfile()
         }
     }
 }
