@@ -10,6 +10,8 @@ import SwiftUI
 struct ProfileView: View {
     
     @EnvironmentObject var vm: ProfileViewModel
+    
+    @EnvironmentObject var router: AppRouter
 
     var body: some View {
         
@@ -98,7 +100,7 @@ struct ProfileView: View {
                             .font(.custom("Outfit-Medium", size: 16))
 
                         Button {
-
+                            router.push(.editProfileView)
                         } label: {
 
                             HStack {
@@ -121,7 +123,7 @@ struct ProfileView: View {
                         }
                         
                         Button {
-
+                            router.push(.changePassword)
                         } label: {
 
                             HStack {

@@ -36,6 +36,12 @@ struct AppNavigationView: View {
                         
                     case .productDetails(let product):
                         ProductDetailView(product: product)
+                        
+                    case .changePassword:
+                        ChangePasswordView()
+                        
+                    case .editProfileView:
+                        EditProfileView()
                     }
                 }
         }
@@ -65,6 +71,12 @@ struct AppNavigationView: View {
             
         case .productDetails(let product):
             ProductDetailView(product: product)
+            
+        case .changePassword:
+            ChangePasswordView()
+            
+        case .editProfileView:
+            EditProfileView()
         }
     }
 }
