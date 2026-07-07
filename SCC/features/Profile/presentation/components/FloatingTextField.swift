@@ -14,6 +14,7 @@ struct FloatingTextField: View {
     @Binding var text: String
 
     var keyboardType: UIKeyboardType = .default
+    var isEditable: Bool = true
 
     @FocusState private var isFocused: Bool
 
@@ -38,9 +39,11 @@ struct FloatingTextField: View {
                 .offset(x: 16, y: -8)
 
             TextField("", text: $text)
+                .foregroundColor(isEditable ? .black : .gray)
                 .font(.custom("Outfit-Regular", size: 16))
                 .keyboardType(keyboardType)
                 .focused($isFocused)
+                .disabled(!isEditable)
                 .padding(.horizontal, 16)
                 .frame(height: 74)
         }

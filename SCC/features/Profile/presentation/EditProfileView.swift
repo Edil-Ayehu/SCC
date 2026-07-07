@@ -102,7 +102,8 @@ struct EditProfileView: View {
                         FloatingTextField(
                             title: "Phone Number",
                             text: $phone,
-                            keyboardType: .phonePad
+                            keyboardType: .phonePad,
+                            isEditable: false
                         )
                     }
 
