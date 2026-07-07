@@ -19,16 +19,18 @@ struct ProfileView: View {
         
         VStack(spacing: 0) {
 
-            // MARK: Header
-
-            Text("Profile")
-                .font(.custom("Outfit-SemiBold", size: 20))
-                .padding(.top, 20)
             
             if (vm.isLoading) {
                 ProgressView()
+                
             } else if let profile = vm.profile {
                 ScrollView(showsIndicators: false) {
+                    
+                    // MARK: Header
+
+                    Text("Profile")
+                        .font(.custom("Outfit-SemiBold", size: 20))
+                        .padding(.top, 20)
 
                     VStack(spacing: 30) {
 
@@ -47,11 +49,11 @@ struct ProfileView: View {
 
                             VStack(spacing: 4) {
 
-                                Text(vm.profile!.name)
+                                Text(profile.name)
                                     .font(.custom("Outfit-Medium", size: 20))
                                 
-                                if (vm.profile!.email != nil) {
-                                    Text(vm.profile!.email!)
+                                if (profile.email != nil) {
+                                    Text(profile.email!)
                                         .font(.custom("Outfit-Regular", size: 14))
                                         .foregroundColor(.gray)
                                 }
@@ -61,18 +63,18 @@ struct ProfileView: View {
 
                             HStack(spacing: 8) {
 
-                                Image(systemName: vm.profile!.isActive ? "checkmark.circle.fill" : "chevron.compact.down")
+                                Image(systemName: profile.isActive ? "checkmark.circle.fill" : "chevron.compact.down")
                                     .foregroundColor(.green)
                                 
                                 
 
-                                Text(vm.profile!.isActive ? "Active Customer" : "InActive Customer")
+                                Text(profile.isActive ? "Active Customer" : "InActive Customer")
                                     .font(.custom("Outfit-Medium", size: 15))
                                     .foregroundColor(vm.profile!.isActive ? .green : .orange)
                             }
                             .padding(.horizontal, 18)
                             .padding(.vertical, 10)
-                            .background(vm.profile!.isActive ? Color.green.opacity(0.12): Color.orange.opacity(0.12))
+                            .background(profile.isActive ? Color.green.opacity(0.12): Color.orange.opacity(0.12))
                             .clipShape(Capsule())
                         }
 
@@ -92,7 +94,7 @@ struct ProfileView: View {
                             ProfileInfoRow(
                                 icon: "calendar",
                                 title: "Member Since",
-                                value: vm.profile!.updatedAt.formattedDate()
+                                value: profile.updatedAt.formattedDate()
                             )
                         }
 
@@ -115,7 +117,7 @@ struct ProfileView: View {
                                         .frame(width: 28)
 
                                     Text("Edit Profile")
-                                        .font(.custom("Outfit-Regular", size: 16))
+                                        .font(.custom("Outfit-Regular", size: 14))
                                         .foregroundColor(.black)
 
                                     Spacer()
@@ -138,7 +140,7 @@ struct ProfileView: View {
                                         .frame(width: 28)
 
                                     Text("Change Password")
-                                        .font(.custom("Outfit-Regular", size: 16))
+                                        .font(.custom("Outfit-Regular", size: 14))
                                         .foregroundColor(.black)
 
                                     Spacer()
@@ -157,7 +159,7 @@ struct ProfileView: View {
                         } label: {
 
                             Text("Logout")
-                                .font(.custom("Outfit-Medium", size: 18))
+                                .font(.custom("Outfit-Medium", size: 16))
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 58)
@@ -186,10 +188,6 @@ struct ProfileView: View {
 
          }
         .background(Color.white)
-        .task {
-            await vm.loadProfile()
-        }
-
     }
 }
 

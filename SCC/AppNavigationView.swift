@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppNavigationView: View {
     @StateObject private var router = AppRouter()
-    
+        
     var body: some View {
         NavigationStack(path: $router.path) {
             rootView

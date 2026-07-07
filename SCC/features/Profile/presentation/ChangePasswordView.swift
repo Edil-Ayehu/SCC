@@ -23,7 +23,7 @@ struct ChangePasswordView: View {
     @State private var showToast = false
     
     @StateObject var profileVM =  DIContainer.shared.makeProfileViewModel()
-    
+        
     
     var body: some View {
 
@@ -157,6 +157,7 @@ struct ChangePasswordView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(profileVM.errorMessage ?? "Something went wrong!")
+                .font(.custom("Outfit-Regular", size: 12))
         }
     }
 }
