@@ -71,4 +71,32 @@ final class ProfileViewModel: ObservableObject {
         }
     }
     
+    func updateProfile(
+        name: String,
+        email: String
+    ) async {
+        isLoading = true
+        errorMessage = nil
+        successMessage = nil
+        
+        defer {
+            isLoading = false
+        }
+        
+        do {
+            let request = UpdateProfileRequest(
+                name: name.isEmpty ? nil : name,
+                email: email.isEmpty ? nil : email
+            )
+            
+            let updatedProfile = try await repository.updateProfile(request: request)
+            profile = updatedProfile
+            
+            successMessage = "Profile updated successfully."
+            
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
 }

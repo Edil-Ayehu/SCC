@@ -27,4 +27,14 @@ final class ProfileRepositoryImpl: ProfileRepository {
             body: request
         )
     }
+    
+    func updateProfile(
+        request: UpdateProfileRequest
+    ) async throws -> ProfileResponse {
+        try await apiClient.request(
+            endpoint: Endpoint.updateProfile,
+            method: "PATCH",
+            body: request
+        )
+    }
 }

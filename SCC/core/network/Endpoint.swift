@@ -60,6 +60,7 @@ enum Endpoint {
     
     // MARK: Prifle
     static let profile = "\(baseUrl)/auth/me"
+    static let updateProfile = "\(baseUrl)/auth/profile"
     
     static let changePassword = "\(baseUrl)/auth/change-password"
     

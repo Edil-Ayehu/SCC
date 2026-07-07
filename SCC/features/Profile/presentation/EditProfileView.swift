@@ -7,6 +7,7 @@
 
 
 import SwiftUI
+import AlertToast
 
 struct EditProfileView: View {
 
@@ -18,6 +19,9 @@ struct EditProfileView: View {
     @State private var email = ""
     @State private var phone = ""
     
+    
+    @State private var showToast: Bool = false
+    
     init(profile: ProfileResponse) {
         self.profile = profile
         
@@ -25,6 +29,8 @@ struct EditProfileView: View {
         _email = State(initialValue: profile.email ?? "")
         _phone = State(initialValue: profile.phone)
     }
+    
+    @StateObject private var profileVM = DIContainer.shared.makeProfileViewModel()
 
     var body: some View {
 
@@ -115,14 +121,49 @@ struct EditProfileView: View {
             CustomButton(
                 title: "Save Changes",
                 action: {
-
+                    Task {
+                        await profileVM.updateProfile(
+                            name: fullName,
+                            email: email
+                        )
+                    
+                    }
                 },
+                isLoading: profileVM.isLoading,
                 height: 48
             )
             .padding(20)
         }
         .background(Color.white)
         .navigationBarBackButtonHidden()
+        .onChange(of: profileVM.successMessage) { _, message in
+            guard message != nil else { return }
+            
+            showToast = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                dismiss()
+            }
+        }
+        .toast(isPresenting: $showToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: profileVM.successMessage
+            )
+        }
+        .alert(
+            "Error",
+            isPresented: Binding(
+                get: { profileVM.errorMessage != nil},
+                set: {_ in profileVM.errorMessage = nil}
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(profileVM.errorMessage ?? "Something went wrong.")
+                .font(.custom("Outfit-Regular", size: 12))
+        }
     }
 }
 

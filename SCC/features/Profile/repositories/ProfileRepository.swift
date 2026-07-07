@@ -12,4 +12,8 @@ protocol ProfileRepository {
     func changePassword(
         request: ChangePasswordRequest
     ) async throws -> ChangePasswordResponse
+    
+    func updateProfile(
+        request: UpdateProfileRequest
+    ) async throws -> ProfileResponse
 }
