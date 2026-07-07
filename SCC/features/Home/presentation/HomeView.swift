@@ -37,7 +37,7 @@ struct HomeView: View {
                 .environmentObject(vm)
                 .tag(Tab.products)
 
-            Text("Vouchers")
+            VoucherView()
                 .tabItem {
                     Image(systemName: "tag.fill")
                         .font(.system(size: 18))
@@ -53,10 +53,8 @@ struct HomeView: View {
                     Text("Cart")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
-//                .environmentObject(cartVM)
                 .tag(Tab.cart)
 
-//            Text("Profile")
             ProfileView()
                 .tabItem {
                     Image(systemName: "person.fill")
