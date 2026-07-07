@@ -57,6 +57,7 @@ enum Endpoint {
     
     // MARK: Voucher
     static let generateVoucher = "\(baseUrl)/vouchers"
+    static let myVouchers = "\(baseUrl)/vouchers/my-vouchers"
     
     // MARK: Prifle
     static let profile = "\(baseUrl)/auth/me"

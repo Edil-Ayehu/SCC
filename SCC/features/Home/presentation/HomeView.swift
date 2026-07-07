@@ -14,6 +14,8 @@ struct HomeView: View {
     @StateObject private var vm = DIContainer.shared.makeProductViewModel()
     
     @StateObject private var profileVM = DIContainer.shared.makeProfileViewModel()
+    
+    @StateObject private var myVoucherVM = DIContainer.shared.makeMyVoucherViewModel()
         
     var body: some View {
         TabView (selection: $selectedTab) {
@@ -44,6 +46,7 @@ struct HomeView: View {
                     Text("Vouchers")
                         .font(.custom("Outfit-Regular", size: 12))
                 }
+                .environmentObject(myVoucherVM)
                 .tag(Tab.vouchers)
 
             CartView()
@@ -68,6 +71,7 @@ struct HomeView: View {
         .task {
             await vm.loadProducts()
             await profileVM.loadProfile()
+            await myVoucherVM.loadVouchers()
         }
     }
 }

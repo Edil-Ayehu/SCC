@@ -19,7 +19,7 @@ struct EmptyVoucherView: View {
                 .foregroundColor(.gray)
 
             Text(title)
-                .font(.custom("Outfit-Medium", size: 18))
+                .font(.custom("Outfit-Medium", size: 16))
 
             Text(subtitle)
                 .font(.custom("Outfit-Regular", size: 14))

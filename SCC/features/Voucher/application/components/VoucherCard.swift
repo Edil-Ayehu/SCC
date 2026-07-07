@@ -8,7 +8,7 @@ import SwiftUI
 
 struct VoucherCard: View {
 
-    let voucher: Voucher
+    let voucher: VoucherResponse
 
     let onCopy: () -> Void
     let onTap: () -> Void
@@ -28,7 +28,7 @@ struct VoucherCard: View {
                             .foregroundColor(.white)
                     }
 
-                Text("\(voucher.productCount) Products")
+                Text("\(voucher.items.count) Products")
                     .font(.custom("Outfit-Medium", size:14))
                     .foregroundColor(.white)
 
