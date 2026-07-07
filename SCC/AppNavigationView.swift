@@ -40,8 +40,8 @@ struct AppNavigationView: View {
                     case .changePassword:
                         ChangePasswordView()
                         
-                    case .editProfileView:
-                        EditProfileView()
+                    case .editProfileView(let profile):
+                        EditProfileView(profile: profile)
                     }
                 }
         }
@@ -75,8 +75,8 @@ struct AppNavigationView: View {
         case .changePassword:
             ChangePasswordView()
             
-        case .editProfileView:
-            EditProfileView()
+        case .editProfileView(let profile):
+            EditProfileView(profile: profile)
         }
     }
 }

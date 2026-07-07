@@ -106,7 +106,7 @@ struct ProfileView: View {
                                 .font(.custom("Outfit-Medium", size: 16))
 
                             Button {
-                                router.push(.editProfileView)
+                                router.push(.editProfileView(profile))
                             } label: {
 
                                 HStack {

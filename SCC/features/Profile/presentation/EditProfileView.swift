@@ -12,9 +12,19 @@ struct EditProfileView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    @State private var fullName = "Edil Ayehu"
-    @State private var email = "lucky@gmail.com"
-    @State private var phone = "+27930884402"
+    let profile: ProfileResponse
+    
+    @State private var fullName: String
+    @State private var email = ""
+    @State private var phone = ""
+    
+    init(profile: ProfileResponse) {
+        self.profile = profile
+        
+        _fullName = State(initialValue: profile.name)
+        _email = State(initialValue: profile.email ?? "")
+        _phone = State(initialValue: profile.phone)
+    }
 
     var body: some View {
 
