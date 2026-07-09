@@ -31,7 +31,6 @@ struct EmptyVoucherView: View {
         .padding(.vertical, 50)
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 24))
-        .shadow(color: .black.opacity(0.05), radius: 10)
         .padding()
     }
 }

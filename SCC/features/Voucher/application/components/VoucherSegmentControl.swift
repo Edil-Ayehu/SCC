@@ -30,7 +30,7 @@ struct VoucherSegmentControl: View {
                         .foregroundColor(
                             selectedTab == tab
                             ? .white
-                            : .gray
+                            : .black
                         )
                         .frame(maxWidth:.infinity)
                         .frame(height:44)

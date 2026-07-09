@@ -26,7 +26,6 @@ struct VoucherView: View {
     @EnvironmentObject private var myVoucherVM: MyVoucherViewModel
 
     var body: some View {
-
         VStack(spacing: 0) {
 
             Text("My Orders")
@@ -56,46 +55,61 @@ struct VoucherView: View {
             .padding(.horizontal,20)
             .padding(.top,26)
             
-            if (myVoucherVM.isLoading) {
-                ProgressView()
-                Spacer()
-            } else {
-                if filteredVouchers.isEmpty {
-                    
-                    Spacer()
-                    
-                    EmptyVoucherView(
-                        title: selectedTab == .pending ? "No Pending Vouchers" : "No Redeemed Vouchers",
-                        subtitle: selectedTab == .pending ? "You don't have any pending vouchers yet." : "YOur redeemed vouchers will appear here."
-                    )
-                    
-                    Spacer()
-                } else {
+                if (myVoucherVM.isLoading) {
                     ScrollView(showsIndicators: false) {
-
-                        LazyVStack(spacing:20) {
-
-                            ForEach(filteredVouchers) { voucher in
-
-                                VoucherCard(
-                                    voucher: voucher,
-                                    onCopy: {
-                                        UIPasteboard.general.string = voucher.code
-                                    },
-                                    onTap: {
-                                        print(voucher.code)
-                                    }
-                                )
+                        LazyVStack (spacing: 20) {
+                            ForEach(0..<5, id: \.self) { _ in
+                                VoucherCardSkeleton()
                             }
                         }
                         .padding(20)
                     }
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        if filteredVouchers.isEmpty {
+                            
+                            
+                            VStack {
+                                EmptyVoucherView(
+                                    title: selectedTab == .pending ? "No Pending Vouchers" : "No Redeemed Vouchers",
+                                    subtitle: selectedTab == .pending ? "You don't have any pending vouchers yet." : "Your redeemed vouchers will appear here."
+                                )
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 80)
+                            
+                            
+                            
+                        } else {
+                            LazyVStack(spacing:20) {
 
+                                ForEach(filteredVouchers) { voucher in
+
+                                    VoucherCard(
+                                        voucher: voucher,
+                                        onCopy: {
+                                            UIPasteboard.general.string = voucher.code
+                                        },
+                                        onTap: {
+                                            print(voucher.code)
+                                        }
+                                    )
+                                }
+                            }
+                            .padding(20)
+
+
+                        }
+
+                    }
+                    .refreshable {
+                        await myVoucherVM.loadVouchers()
+                    }
 
                 }
 
-            }
-            
+
+                        
         }
         .background(Color.white)
     }

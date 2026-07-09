@@ -11,6 +11,7 @@ final class MyVoucherViewModel: ObservableObject {
     @Published var vouchers: [VoucherResponse] = []
     
     @Published var isLoading: Bool = false
+    @Published var isRefreshing = false
     
     @Published var errorMessage: String?
     
@@ -20,12 +21,19 @@ final class MyVoucherViewModel: ObservableObject {
         self.repository = repository
     }
     
-    func loadVouchers() async {
-        isLoading = true
+    func loadVouchers(refresh: Bool = false) async {
+        
+        if refresh {
+            isRefreshing = true
+        } else {
+            isLoading = true
+        }
+        
         errorMessage = nil
         
         defer {
             isLoading = false
+            isRefreshing = false
         }
         
         do {
