@@ -50,6 +50,10 @@ final class DIContainer {
         MyVoucherRepositoryImpl(apiClient: apiClient)
     } ()
     
+    lazy var favoriteRepository: FavoriteRepository = {
+        FavoriteRepositoryImpl(apiClient: apiClient)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -90,6 +94,10 @@ final class DIContainer {
     
     func makeMyVoucherViewModel() -> MyVoucherViewModel {
         MyVoucherViewModel(repository: myVoucherRepository)
+    }
+    
+    func makeFavoriteViewModel() -> FavoriteViewModel {
+        FavoriteViewModel(repository: favoriteRepository)
     }
     
 }

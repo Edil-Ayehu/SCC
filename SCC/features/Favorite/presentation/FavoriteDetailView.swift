@@ -11,11 +11,32 @@ struct FavoriteDetailView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    let favorite: FavoriteCollection
+    let favorite: FavoriteResponse
+    
+    @EnvironmentObject var router: AppRouter
 
     var body: some View {
 
         VStack(spacing: 0) {
+            HStack {
+                Button {
+                    router.pop()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.primary)
+                }
+                
+                Text("Favorite Detail")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .padding()
+                
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            
+            
+            
 
             ScrollView(showsIndicators: false) {
 
@@ -25,7 +46,7 @@ struct FavoriteDetailView: View {
 
                     LazyVStack(spacing: 24) {
 
-                        ForEach(favorite.products) { product in
+                        ForEach(favorite.items) { product in
                             FavoriteProductRow(product: product)
                         }
                     }
@@ -48,13 +69,13 @@ struct FavoriteDetailView: View {
                     action: {
 
                     },
-//                    backgroundColor: Color.red,
                     height: 52
                 )
             }
             .padding(20)
         }
         .background(Color.white)
-        .navigationBarTitle(favorite.name)
+//        .navigationBarTitle(favorite.name ?? "Favorite items")
+        .navigationBarBackButtonHidden(true)
     }
 }

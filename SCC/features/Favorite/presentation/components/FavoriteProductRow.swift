@@ -8,14 +8,14 @@ import SwiftUI
 
 struct FavoriteProductRow: View {
 
-    let product: FavoriteProduct
+    let product: FavoriteItemResponse
 
     var body: some View {
 
         HStack(alignment: .top, spacing: 16) {
 
             RemoteImage(
-                url: product.image,
+                url: product.product.image,
                 height: 72,
                 width: 72,
                 cornerRadius: 18,
@@ -24,7 +24,7 @@ struct FavoriteProductRow: View {
 
             VStack(alignment: .leading, spacing: 10) {
 
-                Text(product.name)
+                Text(product.product.name)
                     .font(.custom("Outfit-Medium", size: 18))
 
                 Text("Qty \(product.quantity)")

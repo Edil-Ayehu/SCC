@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 final class SignInViewModel: ObservableObject {
-    @Published var phoneNumber = "930884422"
+    @Published var phoneNumber = "930884402"
     @Published var password = "654321"
     
     @Published var isLoading = false

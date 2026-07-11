@@ -9,15 +9,15 @@ import SwiftUI
 
 struct ImageStack: View {
 
-    let products: [FavoriteProduct]
+    let products: [FavoriteItemResponse]
 
     var body: some View {
 
         HStack(spacing: -14) {
 
-            ForEach(Array(products.prefix(3).enumerated()), id: \.element.id) { _, product in
+            ForEach(products.prefix(3)) { item in
 
-                AsyncImage(url: URL(string: product.image ?? "")) { phase in
+                AsyncImage(url: URL(string: item.product.image ?? "")) { phase in
 
                     switch phase {
 
@@ -34,13 +34,12 @@ struct ImageStack: View {
                                     .foregroundColor(.gray)
                             }
                     }
-
                 }
                 .frame(width: 56, height: 56)
                 .clipShape(Circle())
                 .overlay(
                     Circle()
-                        .stroke(Color.white, lineWidth: 3)
+                        .stroke(.white, lineWidth: 3)
                 )
             }
         }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FavoriteCard: View {
 
-    let favorite: FavoriteCollection
+    let favorite: FavoriteResponse
     
     @EnvironmentObject var router: AppRouter
 
@@ -36,7 +36,7 @@ struct FavoriteCard: View {
 
                     VStack(alignment: .leading, spacing: 6) {
 
-                        Text(favorite.name)
+                        Text(favorite.name ?? "Favorite items")
                             .font(.custom("Outfit-Medium", size: 16))
 
                         HStack(spacing: 6) {
@@ -60,11 +60,11 @@ struct FavoriteCard: View {
 
                 HStack {
 
-                    ImageStack(products: favorite.products)
+                    ImageStack(products: favorite.items)
 
                     Spacer()
 
-                    Text("\(favorite.products.count) Items")
+                    Text("\(favorite.items.count) Items")
                         .font(.custom("Outfit-Medium", size: 16))
                         .foregroundColor(.green)
                         .padding(.horizontal, 18)

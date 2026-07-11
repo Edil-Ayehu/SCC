@@ -8,7 +8,7 @@ import SwiftUI
 
 struct FavoriteInfoCard: View {
 
-    let favorite: FavoriteCollection
+    let favorite: FavoriteResponse
 
     var body: some View {
 
@@ -25,10 +25,10 @@ struct FavoriteInfoCard: View {
 
             VStack(alignment: .leading, spacing: 6) {
 
-                Text(favorite.name)
+                Text(favorite.name ?? "Favorite items")
                     .font(.custom("Outfit-SemiBold", size: 20))
 
-                Text("\(favorite.products.count) products")
+                Text("\(favorite.items.count) products")
                     .font(.custom("Outfit-Regular", size: 15))
                     .foregroundColor(.gray)
             }
