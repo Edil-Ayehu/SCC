@@ -18,4 +18,13 @@ final class FavoriteRepositoryImpl: FavoriteRepository {
             endpoint: Endpoint.favorites,
         )
     }
+    
+    func deleteFavorite(id: String) async throws -> DeleteFavoriteResponse {
+
+            try await apiClient.request(
+//                endpoint: "https://cash-carry-smart-ordering-system.onrender.com/vouchers/favorites/\(id)",
+                endpoint: Endpoint.favorites+"/"+id,
+                method: "DELETE"
+            )
+        }
 }

@@ -12,7 +12,11 @@ final class FavoriteViewModel: ObservableObject {
     
     @Published var isLoading: Bool = false
     
+    @Published var isDeleting: Bool = false
+    
     @Published var errorMessage: String?
+    
+    @Published var deleteMessage: String?
     
     private let repository: FavoriteRepository
     
@@ -32,6 +36,29 @@ final class FavoriteViewModel: ObservableObject {
             favorites = try await repository.getFavorites()
             
         }catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func deleteFavorite(id: String) async {
+
+        isDeleting = true
+        errorMessage = nil
+
+        defer {
+            isDeleting = false
+        }
+
+        do {
+
+            let response = try await repository.deleteFavorite(id: id)
+
+            deleteMessage = response.message
+
+            favorites.removeAll { $0.id == id }
+
+        } catch {
+
             errorMessage = error.localizedDescription
         }
     }

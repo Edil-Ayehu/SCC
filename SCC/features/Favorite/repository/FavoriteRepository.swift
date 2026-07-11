@@ -7,4 +7,6 @@
 
 protocol FavoriteRepository {
     func getFavorites() async throws -> [FavoriteResponse]
+    
+    func deleteFavorite(id: String) async throws -> DeleteFavoriteResponse
 }

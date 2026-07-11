@@ -20,10 +20,14 @@ struct FavoriteDetailView: View {
     
     @StateObject var voucherVM = DIContainer.shared.makeVoucherViewModel()
     
-    @State private var showDialog: Bool = false
+    @StateObject var favoriteVM = DIContainer.shared.makeFavoriteViewModel()
+    
+    @State private var showVoucherGenerateSuccessDialog: Bool = false
     @State private var generatedVoucherCode: String = ""
     
     @State private var showCopyToast = false
+    
+    @State private var showDeleteToast = false
 
     var body: some View {
 
@@ -75,7 +79,7 @@ struct FavoriteDetailView: View {
                             
                             if voucherVM.voucher != nil {
                                 generatedVoucherCode = voucherVM.voucher!.code
-                                showDialog = true
+                                showVoucherGenerateSuccessDialog = true
                             }
                         }
                     },
@@ -89,6 +93,7 @@ struct FavoriteDetailView: View {
                     action: {
                         showDeleteConfirmation = true
                     },
+                    isLoading: favoriteVM.isDeleting,
                     height: 52,
                     backgroundColor: .red
                 )
@@ -102,33 +107,36 @@ struct FavoriteDetailView: View {
             
             Button("Delete", role: .destructive) {
                 // TODO: Call your delete API
-                // await favoriteVM.deleteFavorite(id: favorite.id)
+                Task {
+                    await favoriteVM.deleteFavorite(id: favorite.id)
+                }
+                 
             }
         } message: {
             Text("Are you sure you want to delete this favorite? This action cannot be undone.")
                 .font(.custom("Outfit-Regular", size: 12))
         }
         .overlay {
-            if showDialog {
+            if showVoucherGenerateSuccessDialog {
                 ZStack {
                     // Dark background
                     Color.black.opacity(0.6)
                         .ignoresSafeArea()
                         .onTapGesture {
-                            showDialog = false
+                            showVoucherGenerateSuccessDialog = false
                         }
                     
                     OrderSuccessDialog(
                         voucherCode: generatedVoucherCode,
                         onDone: {
-                            showDialog = false
+                            showVoucherGenerateSuccessDialog = false
                             // clear cart
                         },
                         onCopy: {
                             // implement copy functionality
                             UIPasteboard.general.string = generatedVoucherCode
                             showCopyToast = true
-                            showDialog = false
+                            showVoucherGenerateSuccessDialog = false
                         }
                     )
                     .padding(.horizontal, 24)
@@ -136,12 +144,29 @@ struct FavoriteDetailView: View {
                 }
             }
         }
-        .animation(.easeInOut(duration: 0.25), value: showDialog)
+        .animation(.easeInOut(duration: 0.25), value: showVoucherGenerateSuccessDialog)
         .toast(isPresenting: $showCopyToast) {
             AlertToast(
                 displayMode: .hud,
                 type: .complete(.green),
                 title: "Voucher code copied"
+            )
+        }
+        
+        .onChange(of: favoriteVM.deleteMessage) { _, message in
+            guard message != nil else { return }
+            
+            showDeleteToast = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                dismiss()
+            }
+        }
+        .toast(isPresenting: $showDeleteToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: favoriteVM.deleteMessage
             )
         }
 
