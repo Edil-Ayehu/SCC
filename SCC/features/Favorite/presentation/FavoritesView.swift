@@ -12,10 +12,30 @@ struct FavoritesView: View {
     @Environment(\.dismiss) private var dismiss
     
     @StateObject var favoriteVM = DIContainer.shared.makeFavoriteViewModel()
+    
+    @EnvironmentObject var router: AppRouter
 
     var body: some View {
 
         VStack(spacing: 0) {
+            
+            HStack {
+                Button {
+                    router.pop()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.primary)
+                }
+                
+                Text("Favorites")
+                    .font(.custom("Outfit-Medium", size: 16))
+                    .foregroundColor(.primary)
+                    .padding()
+                
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            
             
             if favoriteVM.isLoading {
                 ScrollView(showsIndicators: false) {
@@ -55,7 +75,7 @@ struct FavoritesView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.white)
-        .navigationBarTitle("My Favorites")
+        .navigationBarBackButtonHidden(true)
         .task {
             await favoriteVM.loadFavorites()
         }

@@ -16,20 +16,20 @@ struct FavoriteInfoCard: View {
 
             RoundedRectangle(cornerRadius: 18)
                 .fill(Color.red.opacity(0.08))
-                .frame(width: 70, height: 70)
+                .frame(width: 50, height: 50)
                 .overlay {
                     Image(systemName: "heart.fill")
-                        .font(.title)
+                        .font(.system(size: 18))
                         .foregroundColor(.red)
                 }
 
             VStack(alignment: .leading, spacing: 6) {
 
                 Text(favorite.name ?? "Favorite items")
-                    .font(.custom("Outfit-SemiBold", size: 20))
+                    .font(.custom("Outfit-Medium", size: 16))
 
                 Text("\(favorite.items.count) products")
-                    .font(.custom("Outfit-Regular", size: 15))
+                    .font(.custom("Outfit-Regular", size: 14))
                     .foregroundColor(.gray)
             }
 

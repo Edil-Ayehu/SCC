@@ -26,11 +26,11 @@ struct FavoriteCard: View {
 
                     RoundedRectangle(cornerRadius: 18)
                         .fill(Color.red.opacity(0.08))
-                        .frame(width: 70, height: 70)
+                        .frame(width: 50, height: 50)
                         .overlay {
 
                             Image(systemName: "heart.fill")
-                                .font(.system(size: 28))
+                                .font(.system(size: 18))
                                 .foregroundColor(.red)
                         }
 
@@ -38,14 +38,15 @@ struct FavoriteCard: View {
 
                         Text(favorite.name ?? "Favorite items")
                             .font(.custom("Outfit-Medium", size: 16))
+                            .foregroundColor(.black)
 
                         HStack(spacing: 6) {
 
                             Image(systemName: "clock")
                                 .foregroundColor(.gray)
 
-    //                        Text(favorite.date)
-    //                            .foregroundColor(.gray)
+                            Text(favorite.createdAt.formattedDate())
+                                .foregroundColor(.gray)
                         }
                         .font(.custom("Outfit-Regular", size: 14))
                     }
@@ -53,7 +54,8 @@ struct FavoriteCard: View {
                     Spacer()
 
                     Image(systemName: "chevron.right")
-                        .font(.headline)
+                        .font(.system(size: 18))
+                        .foregroundColor(.black.opacity(0.5))
                 }
 
                 // Bottom
@@ -65,7 +67,7 @@ struct FavoriteCard: View {
                     Spacer()
 
                     Text("\(favorite.items.count) Items")
-                        .font(.custom("Outfit-Medium", size: 16))
+                        .font(.custom("Outfit-Medium", size: 14))
                         .foregroundColor(.green)
                         .padding(.horizontal, 18)
                         .padding(.vertical, 10)

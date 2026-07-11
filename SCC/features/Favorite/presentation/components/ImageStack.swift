@@ -28,14 +28,14 @@ struct ImageStack: View {
 
                     default:
                         Circle()
-                            .fill(Color.gray.opacity(0.15))
+                            .fill(Color.gray.opacity(0.4))
                             .overlay {
                                 Image(systemName: "photo")
                                     .foregroundColor(.gray)
                             }
                     }
                 }
-                .frame(width: 56, height: 56)
+                .frame(width: 50, height: 50)
                 .clipShape(Circle())
                 .overlay(
                     Circle()

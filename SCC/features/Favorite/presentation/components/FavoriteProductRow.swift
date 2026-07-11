@@ -16,8 +16,8 @@ struct FavoriteProductRow: View {
 
             RemoteImage(
                 url: product.product.image,
-                height: 72,
-                width: 72,
+                height: 70,
+                width: 70,
                 cornerRadius: 18,
                 padding: 18
             )
@@ -25,10 +25,10 @@ struct FavoriteProductRow: View {
             VStack(alignment: .leading, spacing: 10) {
 
                 Text(product.product.name)
-                    .font(.custom("Outfit-Medium", size: 18))
+                    .font(.custom("Outfit-Medium", size: 16))
 
                 Text("Qty \(product.quantity)")
-                    .font(.custom("Outfit-SemiBold", size: 15))
+                    .font(.custom("Outfit-SemiBold", size: 14))
                     .foregroundColor(.blue)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 6)

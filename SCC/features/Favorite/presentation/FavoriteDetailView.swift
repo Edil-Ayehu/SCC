@@ -27,7 +27,7 @@ struct FavoriteDetailView: View {
                 }
                 
                 Text("Favorite Detail")
-                    .font(.headline)
+                    .font(.custom("Outfit-Medium", size: 16))
                     .foregroundColor(.primary)
                     .padding()
                 
