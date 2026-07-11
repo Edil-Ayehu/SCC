@@ -11,6 +11,7 @@ struct RemoteImage: View {
 
     let url: String?
     var height: CGFloat = 120
+    var width: CGFloat? = nil
     var cornerRadius: CGFloat = 18
     var padding: CGFloat = 30
 
@@ -50,8 +51,8 @@ struct RemoteImage: View {
                 placeholder
             }
         }
-        .frame(height: height)
-        .frame(maxWidth: .infinity)
+        .frame(width: width, height: height)
+        .frame(maxWidth: width == nil ? .infinity : nil)
         .background(Color.gray.opacity(0.08))
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }

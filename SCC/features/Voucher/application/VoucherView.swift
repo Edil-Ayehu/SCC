@@ -23,6 +23,9 @@ struct VoucherView: View {
            : myVoucherVM.redeemedVouchers
     }
     
+    @State private var selectedVoucher: VoucherResponse?
+    @State private var showVoucherSheet = false
+    
     @EnvironmentObject private var myVoucherVM: MyVoucherViewModel
 
     var body: some View {
@@ -92,6 +95,8 @@ struct VoucherView: View {
                                         },
                                         onTap: {
                                             print(voucher.code)
+                                            selectedVoucher = voucher
+                                            showVoucherSheet = true
                                         }
                                     )
                                 }
@@ -112,5 +117,11 @@ struct VoucherView: View {
                         
         }
         .background(Color.white)
+        .sheet(item: $selectedVoucher) { voucher in
+            VoucherDetailSheet(voucher: voucher)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+                .cornerRadius(32)
+        }
     }
 }

@@ -97,5 +97,9 @@ struct VoucherCard: View {
             radius: 12,
             y: 4
         )
+        .contentShape(Rectangle())     // Entire card is tappable
+        .onTapGesture {
+            onTap()
+        }
     }
 }
