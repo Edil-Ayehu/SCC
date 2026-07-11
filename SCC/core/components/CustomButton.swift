@@ -14,6 +14,7 @@ struct CustomButton: View {
     var isEnabled: Bool = true
     var isLoading: Bool = false
     var height: CGFloat = 56
+    var backgroundColor: Color = .primaryPurple
 
     var body: some View {
         Button(action: action) {
@@ -31,7 +32,7 @@ struct CustomButton: View {
             .foregroundColor(.white)
             .background(
                 isEnabled
-                    ? Color.primaryPurple
+                    ? backgroundColor
                     : Color.gray.opacity(0.5)
             )
             .cornerRadius(32)

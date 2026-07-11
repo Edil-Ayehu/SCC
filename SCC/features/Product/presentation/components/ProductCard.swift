@@ -28,7 +28,8 @@ struct ProductCard: View {
             )
             
             VStack (alignment: .leading){
-                Text(product.category.name)
+
+                Text(product.category?.name ?? "")
                     .font(.custom("Outfit-Regular", size: 12))
                     .foregroundColor(.primaryPurple)
 

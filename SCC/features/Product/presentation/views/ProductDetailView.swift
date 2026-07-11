@@ -37,7 +37,7 @@ struct ProductDetailView: View {
 
                         HStack {
 
-                            Text(product.category.name.uppercased())
+                            Text(product.category?.name.uppercased() ?? "")
                                 .font(.custom("Outfit-Medium", size: 12))
                                 .foregroundColor(.primaryPurple)
 

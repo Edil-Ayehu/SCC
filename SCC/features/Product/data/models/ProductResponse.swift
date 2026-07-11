@@ -14,7 +14,7 @@ struct ProductResponse: Codable, Identifiable, Hashable {
     let description: String?
     let image: String?
 
-    let category: ProductCategory
+    var category: ProductCategory?
  
     enum CodingKeys: String, CodingKey {
         case id
