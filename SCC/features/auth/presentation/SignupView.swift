@@ -151,7 +151,7 @@ struct SignupView: View {
             }
             .padding(.horizontal, 24)
             .navigationBarHidden(true)
-            .onChange(of: vm.errorMessage) { error in
+            .onChange(of: vm.errorMessage) {_, error in
                 if let error {
                     print("😭Error message:" + error)
                     // show an alert or toast here
@@ -159,7 +159,7 @@ struct SignupView: View {
                     toastMessage = error
                 }
             }
-            .onChange(of: vm.isLoggedIn) { isLoggedIn in
+            .onChange(of: vm.isLoggedIn) {_, isLoggedIn in
                 router.pop()
                 print("👋👋👋👋 Sign Up Successful!")
             }

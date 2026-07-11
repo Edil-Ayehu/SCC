@@ -95,7 +95,7 @@ struct SignInView: View {
             }
             .padding(.horizontal, 24)
             .navigationBarHidden(true)
-            .onChange(of: vm.isLoggedIn) { isLoggedIn in
+            .onChange(of: vm.isLoggedIn) {_, isLoggedIn in
                 if isLoggedIn {
                     router.setRoot(.home)
                     print("👋👋👋👋 Sign In Successful!")

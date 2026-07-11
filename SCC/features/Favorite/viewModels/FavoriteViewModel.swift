@@ -10,13 +10,19 @@ import Foundation
 final class FavoriteViewModel: ObservableObject {
     @Published var favorites: [FavoriteResponse] = []
     
+    @Published var createdFavorite: FavoriteResponse?
+    
     @Published var isLoading: Bool = false
+    
+    @Published var isCreating: Bool = false
     
     @Published var isDeleting: Bool = false
     
     @Published var errorMessage: String?
     
     @Published var deleteMessage: String?
+    
+    @Published var createSuccessMessage: String?
     
     private let repository: FavoriteRepository
     
@@ -39,6 +45,34 @@ final class FavoriteViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
     }
+    
+    func createFavorite(request: CreateFavoriteRequest) async {
+
+        isCreating = true
+        errorMessage = nil
+
+        defer {
+            isCreating = false
+        }
+
+        do {
+
+            let favorite = try await repository.createFavorite(
+                request: request
+            )
+
+            createdFavorite = favorite
+
+            favorites.insert(favorite, at: 0)
+
+            createSuccessMessage = "Favorite created successfully"
+
+        } catch {
+
+            errorMessage = error.localizedDescription
+        }
+    }
+
     
     func deleteFavorite(id: String) async {
 

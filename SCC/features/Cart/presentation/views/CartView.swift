@@ -17,11 +17,19 @@ struct CartView: View {
     
     @StateObject private var voucherVM = DIContainer.shared.makeVoucherViewModel()
     
+    @StateObject private var favoriteVM = DIContainer.shared.makeFavoriteViewModel()
+    
     @State private var generatedVoucherCode: String = ""
     
     @State private var showClearCartConfirmation = false
     
     @State private var showCopyToast = false
+    
+    @State private var showFavoriteSheet = false
+    
+    @State private var showFavoriteSuccessToast = false
+    
+    @State private var favoriteName = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -95,7 +103,8 @@ struct CartView: View {
 
 
                     Button {
-
+                        showFavoriteSheet = true
+                        favoriteName = ""
                     } label: {
                         Text("Add to Favorite")
                             .font(.custom("Outfit-Medium", size: 16))
@@ -166,5 +175,69 @@ struct CartView: View {
             }
         }
         .animation(.easeInOut(duration: 0.25), value: showDialog)
+        
+        .sheet(isPresented: $showFavoriteSheet) {
+            AddFavoriteSheet(
+                favoriteName: $favoriteName,
+                isLoading: favoriteVM.isCreating
+            ) {
+
+                Task {
+
+                    let request = CreateFavoriteRequest(
+                        name: favoriteName.isEmpty ? nil : favoriteName,
+                        items: cartVM.items.map {
+                            CreateFavoriteItemRequest(
+                                productId: $0.product.id,
+                                quantity: $0.quantity
+                            )
+                        }
+                    )
+
+                    await favoriteVM.createFavorite(request: request)
+
+                    if favoriteVM.errorMessage == nil {
+                        showFavoriteSheet = false
+                    }
+                }
+
+            } onSkip: {
+
+                Task {
+
+                    let request = CreateFavoriteRequest(
+                        name: nil,
+                        items: cartVM.items.map {
+                            CreateFavoriteItemRequest(
+                                productId: $0.product.id,
+                                quantity: $0.quantity
+                            )
+                        }
+                    )
+
+                    await favoriteVM.createFavorite(request: request)
+
+                    if favoriteVM.errorMessage == nil {
+                        showFavoriteSheet = false
+                    }
+                }
+
+            }
+            .presentationDetents([.height(280)])
+            .presentationDragIndicator(.visible)
+        }
+        .onChange(of: favoriteVM.createSuccessMessage) {_, message in
+            if message != nil {
+                showFavoriteSuccessToast = true
+            }
+            
+        }
+        .toast(isPresenting: $showFavoriteSuccessToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: favoriteVM.createSuccessMessage
+            )
+        }
     }
 }
