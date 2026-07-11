@@ -31,8 +31,6 @@ struct AppNavigationView: View {
                     case .stores:
                         StoresView()
                         
-                    case .wishlist:
-                        WishlistView()
                         
                     case .productDetails(let product):
                         ProductDetailView(product: product)
@@ -42,6 +40,12 @@ struct AppNavigationView: View {
                         
                     case .editProfileView(let profile):
                         EditProfileView(profile: profile)
+                        
+                    case .favoriteView:
+                        FavoritesView()
+                        
+                    case .favoriteDetailView(let favorite):
+                        FavoriteDetailView(favorite: favorite)
                     }
                 }
         }
@@ -66,9 +70,6 @@ struct AppNavigationView: View {
         case .stores:
             StoresView()
             
-        case .wishlist:
-            WishlistView()
-            
         case .productDetails(let product):
             ProductDetailView(product: product)
             
@@ -77,6 +78,12 @@ struct AppNavigationView: View {
             
         case .editProfileView(let profile):
             EditProfileView(profile: profile)
+            
+        case .favoriteView:
+            FavoritesView()
+            
+        case .favoriteDetailView(let favorite):
+            FavoriteDetailView(favorite: favorite)
         }
     }
 }

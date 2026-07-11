@@ -47,7 +47,7 @@ struct HeaderSection: View {
                         })
 
                         HeaderIconButton(icon: "heart.fill", action: {
-                            router.push(.wishlist)
+                            router.push(.favoriteView)
                         })
                     }
                 }
