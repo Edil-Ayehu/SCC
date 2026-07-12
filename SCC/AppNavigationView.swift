@@ -46,6 +46,9 @@ struct AppNavigationView: View {
                         
                     case .favoriteDetailView(let favorite):
                         FavoriteDetailView(favorite: favorite)
+                        
+                    case .resetPasswordView(let phoneNumber):
+                        ResetPasswordView(phoneNumber: phoneNumber)
                     }
                 }
         }
@@ -84,6 +87,9 @@ struct AppNavigationView: View {
             
         case .favoriteDetailView(let favorite):
             FavoriteDetailView(favorite: favorite)
+            
+        case .resetPasswordView(let phoneNumber):
+            ResetPasswordView(phoneNumber: phoneNumber)
         }
     }
 }

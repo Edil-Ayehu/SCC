@@ -11,17 +11,11 @@ import SwiftUI
 struct PasswordField: View {
 
     let title: String
-
     @Binding var text: String
-
-    let isSecure: Bool
-
+    @Binding var isSecure: Bool
     let icon: String
 
-    let onToggleVisibility: () -> Void
-
     var body: some View {
-
         HStack(spacing: 14) {
 
             Image(systemName: icon)
@@ -29,20 +23,16 @@ struct PasswordField: View {
                 .frame(width: 22)
 
             Group {
-
                 if isSecure {
-
                     SecureField(title, text: $text)
-
                 } else {
-
                     TextField(title, text: $text)
                 }
             }
-            .font(.custom("Outfit-Regular", size: 16))
 
-            Button(action: onToggleVisibility) {
-
+            Button {
+                isSecure.toggle()
+            } label: {
                 Image(systemName: isSecure ? "eye" : "eye.slash")
                     .foregroundColor(.gray)
             }
@@ -51,7 +41,7 @@ struct PasswordField: View {
         .frame(height: 62)
         .background(Color.white)
         .overlay(
-            RoundedRectangle(cornerRadius: 18)
+            RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.gray.opacity(0.18), lineWidth: 1)
         )
     }

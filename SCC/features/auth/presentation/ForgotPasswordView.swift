@@ -73,16 +73,7 @@ struct ForgotPasswordView: View {
     }
     
     func _handleSendCode() {
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            print("Forgot password verification code sent to " + phoneNumber)
-            isLoading = false
-            phoneNumber = ""
-            router.popToRoot()
-        })
+        router.push(.resetPasswordView(phoneNumber))
     }
 }
 
-//#Preview {
-//    ForgotPasswordView()
-//}

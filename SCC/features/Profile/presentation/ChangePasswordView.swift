@@ -16,9 +16,11 @@ struct ChangePasswordView: View {
     @State private var newPassword = ""
     @State private var confirmPassword = ""
 
-    @State private var showOldPassword = false
-    @State private var showNewPassword = false
-    @State private var showConfirmPassword = false
+    @State private var oldPasswordSecure = true
+    @State private var newPasswordSecure = true
+    @State private var confirmPasswordSecure = true
+    
+    @State private var isSecure = true
     
     @State private var showToast = false
     
@@ -68,31 +70,22 @@ struct ChangePasswordView: View {
                         PasswordField(
                             title: "Old Password",
                             text: $oldPassword,
-                            isSecure: !showOldPassword,
-                            icon: "lock",
-                            onToggleVisibility: {
-                                showOldPassword.toggle()
-                            }
+                            isSecure: $oldPasswordSecure,
+                            icon: "lock"
                         )
 
                         PasswordField(
                             title: "New Password",
                             text: $newPassword,
-                            isSecure: !showNewPassword,
-                            icon: "lock.rotation",
-                            onToggleVisibility: {
-                                showNewPassword.toggle()
-                            }
+                            isSecure: $newPasswordSecure,
+                            icon: "lock.rotation"
                         )
 
                         PasswordField(
                             title: "Confirm Password",
                             text: $confirmPassword,
-                            isSecure: !showConfirmPassword,
-                            icon: "lock.open",
-                            onToggleVisibility: {
-                                showConfirmPassword.toggle()
-                            }
+                            isSecure: $confirmPasswordSecure,
+                            icon: "lock.open"
                         )
                     }
 
