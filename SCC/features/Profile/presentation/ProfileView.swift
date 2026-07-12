@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import AlertToast
 
 struct ProfileView: View {
     
@@ -14,6 +15,10 @@ struct ProfileView: View {
     
  
     @EnvironmentObject var router: AppRouter
+    
+    @State private var showLogoutConfirmationDialog: Bool = false
+    
+    @StateObject private var authVM = DIContainer.shared.makeLogoutViewModel()
 
     var body: some View {
         
@@ -153,28 +158,16 @@ struct ProfileView: View {
                         }
 
                         // MARK: Logout
+                        
+                        CustomButton(
+                            title: "Logout",
+                            action: {
+                                showLogoutConfirmationDialog = true
+                            },
+                            height: 48,
+                            backgroundColor: .red,
+                        )
 
-                        Button {
-
-                        } label: {
-
-                            Text("Logout")
-                                .font(.custom("Outfit-Medium", size: 16))
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 58)
-                                .background(
-                                    LinearGradient(
-                                        colors: [
-                                            Color(red: 1.0, green: 0.34, blue: 0.36),
-                                            Color.red
-                                        ],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                                .clipShape(Capsule())
-                        }
                     }
                     .padding(24)
                 }
@@ -188,6 +181,47 @@ struct ProfileView: View {
 
          }
         .background(Color.white)
+        .alert("Logout?", isPresented: $showLogoutConfirmationDialog) {
+            Button("Cancel", role: .cancel) {}
+            
+            Button("Logout", role: .destructive) {
+                Task {
+                    await authVM.logout()
+                }
+                
+            }
+        } message: {
+            Text("Are you sure you want to log out of your account?")
+                .font(.custom("Outfit-Regular", size: 12))
+        }
+        .onChange(of: authVM.didLogout) { _, didLogout in
+            if didLogout {
+                router.setRoot(.signIn)
+            }
+        }
+        
+        .overlay {
+            if authVM.isLoggingOut {
+                ZStack {
+                    Color.black.opacity(0.35)
+                        .ignoresSafeArea()
+
+                    VStack(spacing: 16) {
+                        ProgressView()
+
+                        Text("Signing out...")
+                            .font(.custom("Outfit-Medium", size: 16))
+                    }
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 24)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .shadow(radius: 12)
+                }
+            }
+        }
+        .animation(.easeInOut(duration: 0.2), value: authVM.isLoggingOut)
+        
     }
 }
 

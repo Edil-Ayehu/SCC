@@ -72,6 +72,10 @@ final class DIContainer {
         SignUpViewModel(repository: authRepository)
     }
     
+    func makeLogoutViewModel() -> LogoutViewModel {
+        LogoutViewModel(repository: authRepository)
+    }
+    
     func makeProductViewModel() -> ProductViewModel {
         ProductViewModel(repository: productRepository)
     }

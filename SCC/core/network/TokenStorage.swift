@@ -28,5 +28,6 @@ final class UserDefaultsTokenStorage: TokenStorage {
     
     func clear() {
         UserDefaults.standard.removeObject(forKey: key)
+        print("🙌🙌🙌 Access token cleared successfully!")
     }
 }

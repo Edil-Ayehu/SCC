@@ -55,4 +55,12 @@ final class AuthRepositoryImpl: AuthRepository {
             body: request
         )
     }
+    
+    func logout() async throws {
+
+            // Simulate API call
+            try await Task.sleep(for: .seconds(2))
+
+            tokenStorage.clear()
+        }
 }

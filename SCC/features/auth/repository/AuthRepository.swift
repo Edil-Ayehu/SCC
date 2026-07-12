@@ -19,4 +19,6 @@ protocol AuthRepository {
         email: String?,
         name: String,
     ) async throws -> SignUpResponse
+    
+    func logout() async throws
 }
