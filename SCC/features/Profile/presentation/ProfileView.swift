@@ -44,12 +44,12 @@ struct ProfileView: View {
                         VStack(spacing: 12) {
 
                             Circle()
-                                .fill(Color.gray.opacity(0.12))
-                                .frame(width: 110, height: 110)
+                                .fill(Color.primaryPurple)
+                                .frame(width: 90, height: 90)
                                 .overlay {
-                                    Image(systemName: "person.fill")
-                                        .font(.system(size: 42))
-                                        .foregroundColor(.primaryPurple)
+                                    Text(profile.name.initials)
+                                        .font(.custom("Outfit-Bold", size: 28))
+                                        .foregroundColor(.white)
                                 }
 
                             VStack(spacing: 4) {
@@ -155,18 +155,30 @@ struct ProfileView: View {
                                 }
                                 .padding(.vertical, 10)
                             }
-                        }
-
-                        // MARK: Logout
-                        
-                        CustomButton(
-                            title: "Logout",
-                            action: {
+                            
+                            Button {
                                 showLogoutConfirmationDialog = true
-                            },
-                            height: 48,
-                            backgroundColor: .red,
-                        )
+                            } label: {
+
+                                HStack {
+
+                                    Image(systemName: "iphone.and.arrow.right.outward")
+                                        .font(.system(size: 18))
+                                        .foregroundColor(.primaryPurple)
+                                        .frame(width: 28)
+
+                                    Text("Logout")
+                                        .font(.custom("Outfit-Regular", size: 14))
+                                        .foregroundColor(.black)
+
+                                    Spacer()
+
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.black)
+                                }
+                                .padding(.vertical, 10)
+                            }
+                        }
 
                     }
                     .padding(24)
