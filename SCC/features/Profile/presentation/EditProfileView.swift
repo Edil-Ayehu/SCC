@@ -49,7 +49,7 @@ struct EditProfileView: View {
                 }
 
                 Text("Edit Profile")
-                    .font(.custom("Outfit-Regular", size: 16))
+                    .font(.custom("Outfit-Medium", size: 16))
 
                 Spacer()
             }

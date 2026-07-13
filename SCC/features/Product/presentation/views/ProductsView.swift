@@ -42,7 +42,26 @@ struct ProductsView: View {
                         .font(.custom("Outfit-Medium", size: 18))
                         .padding(.top, 20)
 
+//                    HStack(spacing: 12) {
+//                        Image(systemName: "magnifyingglass")
+//                            .foregroundColor(.gray)
+//
+//                        TextField(
+//                            "Search your favorite drinks or meals...",
+//                            text: $vm.search
+//                        )
+//                        .font(.custom("Outfit-Regular", size: 14))
+//                        .onSubmit {
+//                            Task {
+//                                await vm.loadProducts()
+//                            }
+//                        }
+//                    }
+//                    .padding()
+//                    .background(Color(.gray).opacity(0.1))
+//                    .cornerRadius(16)
                     HStack(spacing: 12) {
+
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
 
@@ -51,15 +70,31 @@ struct ProductsView: View {
                             text: $vm.search
                         )
                         .font(.custom("Outfit-Regular", size: 14))
+                        .submitLabel(.search)
                         .onSubmit {
                             Task {
                                 await vm.loadProducts()
                             }
                         }
+
+                        if !vm.search.isEmpty {
+                            Button {
+                                vm.search = ""
+
+                                Task {
+                                    await vm.loadProducts()   // Reload all products after clearing
+                                }
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.gray.opacity(0.7))
+                                    .font(.system(size: 18))
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                     .padding()
-                    .background(Color(.gray).opacity(0.1))
-                    .cornerRadius(16)
+                    .background(Color.gray.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
 
                     LazyVGrid(columns: columns, spacing: 12) {
                         if vm.isLoading {

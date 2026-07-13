@@ -17,10 +17,30 @@ struct ProductDetailView: View {
     @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
     
     @State private var showToast = false
+    
+    @EnvironmentObject var router: AppRouter
 
     var body: some View {
 
         VStack(spacing: 0) {
+            
+            HStack(spacing: 16) {
+
+                Button {
+                    router.pop()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.title3)
+                        .foregroundColor(.black)
+                }
+
+                Text("Product Details")
+                    .font(.custom("Outfit-Medium", size: 16))
+
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
 
             ScrollView {
 
@@ -87,7 +107,8 @@ struct ProductDetailView: View {
             )
             .padding()
         }
-        .navigationTitle("Product Details")
+//        .navigationTitle("Product Details")
+        .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .toast(isPresenting: $showToast) {
             AlertToast(

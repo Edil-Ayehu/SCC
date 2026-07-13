@@ -44,7 +44,7 @@ struct ChangePasswordView: View {
                 }
 
                 Text("Change Password")
-                    .font(.custom("Outfit-Regular", size: 16))
+                    .font(.custom("Outfit-Medium", size: 16))
 
                 Spacer()
             }
