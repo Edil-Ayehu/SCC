@@ -112,6 +112,7 @@ struct SignInView: View {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text(vm.errorMessage ?? "Something went wrong!")
+                    .font(.custom("Outfit-Regular", size: 12))
             }
     }
     

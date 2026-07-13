@@ -14,6 +14,7 @@ enum Endpoint {
     // MARK: Authentication
     static let login = "\(baseUrl)/auth/login"
     static let register = "\(baseUrl)/auth/register"
+    static let forgotPassword = "\(baseUrl)/auth/forgot-password"
     
     // MARK: Products
     

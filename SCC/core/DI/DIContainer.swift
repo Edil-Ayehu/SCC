@@ -104,4 +104,8 @@ final class DIContainer {
         FavoriteViewModel(repository: favoriteRepository)
     }
     
+    func makeForgotPasswordViewModel() -> ForgotPasswordViewModel {
+        ForgotPasswordViewModel(repository: authRepository)
+    }
+    
 }

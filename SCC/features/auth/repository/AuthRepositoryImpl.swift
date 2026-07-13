@@ -56,6 +56,16 @@ final class AuthRepositoryImpl: AuthRepository {
         )
     }
     
+    func forgotPassword(phone: String) async throws -> ForgotPasswordResponse {
+        let request = ForgotPasswordRequest(phone: phone)
+        
+        return try await apiClient.request(
+            endpoint: Endpoint.forgotPassword,
+            method: "POST",
+            body: request
+        )
+    }
+    
     func logout() async throws {
 
             // Simulate API call

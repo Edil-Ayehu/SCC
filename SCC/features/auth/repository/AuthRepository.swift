@@ -20,5 +20,7 @@ protocol AuthRepository {
         name: String,
     ) async throws -> SignUpResponse
     
+    func forgotPassword(phone: String) async throws -> ForgotPasswordResponse
+    
     func logout() async throws
 }

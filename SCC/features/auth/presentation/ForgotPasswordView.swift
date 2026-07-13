@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     @State var phoneNumber: String = ""
-    @State var isLoading: Bool = false
     
     var isValid: Bool {
-        phoneNumber.count >= 10
+        phoneNumber.count >= 9
     }
     
     @EnvironmentObject private var router: AppRouter
+    
+    @StateObject private var forgotPasswordVM = DIContainer.shared.makeForgotPasswordViewModel()
     
     var body: some View {
             VStack(spacing: 24) {
@@ -51,9 +52,14 @@ struct ForgotPasswordView: View {
                 
                 CustomButton(
                     title: "Send Code",
-                    action: _handleSendCode,
+                    action: {
+                        Task {
+                            await forgotPasswordVM.sendOTP(phone: phoneNumber)
+                            
+                        }
+                    },
                     isEnabled: isValid,
-                    isLoading: isLoading
+                    isLoading: forgotPasswordVM.isLoading
                 )
                 
                 Button {
@@ -70,10 +76,23 @@ struct ForgotPasswordView: View {
             }
             .padding(.horizontal, 24)
             .navigationBarHidden(true)
+            .onChange(of: forgotPasswordVM.successMessage) { _, successMessage in
+                if successMessage != nil {
+                        router.push(.resetPasswordView(phoneNumber))
+                }
+            }
+            .alert(
+                "Error",
+                isPresented: Binding(
+                    get: { forgotPasswordVM.errorMessage != nil },
+                    set: { _ in forgotPasswordVM.errorMessage = nil }
+                )
+            ) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(forgotPasswordVM.errorMessage ?? "")
+            }
     }
     
-    func _handleSendCode() {
-        router.push(.resetPasswordView(phoneNumber))
-    }
 }
 
