@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct ResetPasswordView: View {
 
@@ -15,12 +16,16 @@ struct ResetPasswordView: View {
     @State private var showPassword = false
     @State private var isLoading = false
     @State private var isSecure = true
+    
+    @State private var showSuccessToast: Bool = false
 
     @EnvironmentObject private var router: AppRouter
+    
+    @StateObject private var resetPasswordVM = DIContainer.shared.makeResetPasswordViewModel()
 
     private var isValid: Bool {
         verificationCode.count >= 4 &&
-        password.count >= 8
+        password.count >= 6
     }
 
     var body: some View {
@@ -57,102 +62,59 @@ struct ResetPasswordView: View {
 
             CustomButton(
                 title: "Reset Password",
-                action: resetPassword,
+                action: {
+                    Task {
+                        await resetPasswordVM.resetPassword(
+                            phone: phoneNumber,
+                            code: verificationCode,
+                            newPassword: password
+                        )
+                    }
+                },
                 isEnabled: isValid,
-                isLoading: isLoading,
+                isLoading: resetPasswordVM.isLoading,
             )
 
             Spacer()
         }
         .padding(.horizontal, 24)
-
-//        ZStack(alignment: .top) {
-//
-//            Color(.systemGray6)
-//                .ignoresSafeArea()
-//
-//            VStack(spacing: 0) {
-//
-//                // Header
-//                AuthHeader(
-//                    title: "Reset Password",
-//                    description: "Create a strong, new password for your account"
-//                )
-//
-//                Spacer()
-//                
-//                
-//            }
-//
-//            VStack {
-//
-//                Spacer().frame(height: 185)
-//
-//                VStack(spacing: 22) {
-//
-//                    ZStack {
-//                        Circle()
-//                            .fill(Color.cyan.opacity(0.15))
-//                            .frame(width: 90, height: 90)
-//
-//                        Image(systemName: "shield.fill")
-//                            .font(.system(size: 38))
-//                            .foregroundColor(.cyan)
-//                    }
-//
-//                    VStack(spacing: 18) {
-//
-//                        CustomTextField(
-//                            text: $verificationCode,
-//                            placeholder: "Verification Code",
-//                            isRequired: true,
-//                            prefixIcon: Image(systemName: "number.square")
-//                        )
-//
-//                        PasswordField(
-//                            title: "New Password",
-//                            text: $password,
-//                            isSecure: $isSecure,
-//                            icon: "lock"
-//                        )
-//
-//                    }
-//
-//                    CustomButton(
-//                        title: "Reset Password",
-//                        action: resetPassword,
-//                        isEnabled: isValid,
-//                        isLoading: isLoading
-//                    )
-//
-//                }
-//                .padding(24)
-//                .background(Color.white)
-//                .clipShape(RoundedRectangle(cornerRadius: 28))
-//                .shadow(color: .black.opacity(0.08),
-//                        radius: 18,
-//                        y: 8)
-//                .padding(.horizontal, 24)
-//
-//                Spacer()
-//            }
-//        }
-//        .navigationBarBackButtonHidden(true)
-//        .background(.white)
-    }
-
-    private func resetPassword() {
-
-        isLoading = true
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-
-            isLoading = false
-
-            print("Verification Code:", verificationCode)
-            print("New Password:", password)
-
-            router.popToRoot()
+        .onChange(of: resetPasswordVM.successMessage) { _, successMessage in
+            if successMessage != nil {
+                
+                showSuccessToast = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    router.setRoot(.signIn)
+                }
+                
+            }
         }
+        
+        .toast(isPresenting: $showSuccessToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+//                title: resetPasswordVM.successMessage
+                title: resetPasswordVM.successMessage?
+                            .replacingOccurrences(
+                                of: ". You can now",
+                                with: ".\nYou can now"
+                            )
+            )
+        }
+        
+        .alert(
+            "Error",
+            isPresented: Binding(
+                get: { resetPasswordVM.errorMessage != nil },
+                set: { _ in resetPasswordVM.errorMessage = nil }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(resetPasswordVM.errorMessage ?? "Something went wrong.")
+        }
+
     }
+
 }

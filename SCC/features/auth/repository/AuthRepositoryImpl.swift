@@ -66,6 +66,24 @@ final class AuthRepositoryImpl: AuthRepository {
         )
     }
     
+    func resetPassword(
+        phone: String,
+        code: String,
+        newPassword: String
+    ) async throws -> ResetPasswordResponse {
+        let request = ResetPasswordRequest(
+            phone: phone,
+            code: code,
+            newPassword: newPassword
+        )
+        
+        return try await apiClient.request(
+            endpoint: Endpoint.resetPassword,
+            method: "POST",
+            body: request
+        )
+    }
+    
     func logout() async throws {
 
             // Simulate API call
